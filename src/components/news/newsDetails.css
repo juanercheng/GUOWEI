@@ -1,0 +1,91 @@
+.f_content{
+  width: 67%;
+  text-align: left;
+  overflow: hidden;
+  margin-top: 70px;
+}
+.left-con{
+  width: 31%;
+  margin-top: 70px;
+}
+.img1 {
+  margin-bottom: 10px;
+  height: 80px;
+  position: relative;
+}
+.mask{
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 5px;
+  position: absolute;
+  right: 1%;
+  bottom: 5%;
+  font-size: 10px;
+  padding: 2px 5px;
+}
+.img1 img{
+  width: 100%;
+  height: 100%;
+}
+.new_content{
+  width: 1196px;
+  height: 1953px;
+  margin: 91px 0px 64px 358px;
+  padding-bottom: 24px;
+}
+.details-label{
+  padding-top: 31px;
+  /*width: 445px;*/
+  /*height: 14px;*/
+  color: #888;
+}
+.label_one{
+  width: 55px;
+}
+.details-label span{
+  padding-right: 30px;
+}
+.label_two{
+  width: 88px;
+  padding-right: 42px;
+}
+
+.details-img {
+  padding-top: 65px;
+  width:742px;
+  height: 487px;
+  margin-left:29px;
+  margin-right: 48px;
+}
+.details-img img{
+  width: 100%;
+  border-radius: 8px;
+}
+.deta img{
+  margin-left: 20px;
+  cursor: pointer;
+}
+.mainText{
+  margin: 63px 0;
+  line-height: 36px;
+  font-size: 18px;
+  color: #5b5b5b;
+  text-align: justify;
+}
+
+.weichat{
+  font-size:14px;
+  z-index:999;
+  position: absolute;
+  bottom:145%;
+  right:3.8%;
+  background-color: #fff;
+  padding: 20px 20px 10px 20px;
+  border: 1px solid #ddd;
+}
+.wei-icon{
+  position: absolute;bottom: -5%;left: 44%
+}
+.qcode{
+  width: 120px;height:120px;
+}

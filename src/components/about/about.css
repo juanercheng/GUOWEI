@@ -1,0 +1,50 @@
+#aboutTab{
+  width:1200px;
+  margin:0 auto;
+  position:relative;
+  bottom:63px;
+  background-color:rgba(255,255,255,0.8);
+}
+.el-tabs__header{
+  margin:0;
+}
+.el-tabs__content{
+  padding:60px 30px;
+  font-size:18px;
+  text-align:left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.el-tabs__nav{
+  height:63px;
+  width:100%;
+  border:0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  display:flex;
+  flex-direction: row;
+}
+.el-tabs__nav div{
+  display: flex;
+  height:100%;
+  justify-content: center;
+  align-items: center;
+  flex:1;
+  text-align: center;
+  font-size:18px;
+}
+.el-tabs__item.is-top.is-active{
+  background-color:#fff;
+  color:#f05a21;
+}
+.el-tabs--card>.el-tabs__header .el-tabs__item{
+  border:0;
+}
+.el-tabs__nav div:hover{
+  color:#000;
+}
+.el-tabs--card>.el-tabs__header{
+  border-bottom: none;
+}

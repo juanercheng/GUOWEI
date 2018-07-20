@@ -1,0 +1,35 @@
+.block{
+  width: 100%;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.block img{
+  cursor: pointer;
+}
+.el-carousel__container{
+  height: 400px;
+}
+.block-item-img{
+  width: 100%;
+  height: 100%;
+}
+.el-carousel__indicators{
+  left: 94%;
+  width: 20%;
+}
+.el-carousel__button{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+/*.text-mask{*/
+  /*position: absolute;*/
+  /*bottom: 0;*/
+  /*width: 100%;*/
+  /*background-color: rgba(0,0,0,0.2);*/
+  /*text-align: left;*/
+  /*padding:10px 20px;*/
+  /*color: #fff;*/
+  /*font-size: 18px;*/
+/*}*/

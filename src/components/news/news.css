@@ -1,0 +1,16 @@
+.news-right-Ad-last{
+  margin-bottom: 30px;
+}
+.news-right-Ad{
+  margin-bottom: 10px;
+}
+.news-tab-li {
+  float: left;
+  font-size: 20px;
+  width: 12.5%;
+  height: 60px;
+  line-height: 60px;
+  color: #666;
+  background-color: #fafbfc;
+  cursor: pointer;
+}

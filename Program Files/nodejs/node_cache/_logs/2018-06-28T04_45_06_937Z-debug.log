@@ -1,0 +1,29 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\mafei\\Program Files\\nodejs\\node_global\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'dev' ]
+2 info using npm@6.1.0
+3 info using node@v10.5.0
+4 verbose run-script [ 'predev', 'dev', 'postdev' ]
+5 info lifecycle GUOWER@1.0.0~predev: GUOWER@1.0.0
+6 info lifecycle GUOWER@1.0.0~dev: GUOWER@1.0.0
+7 verbose lifecycle GUOWER@1.0.0~dev: unsafe-perm in lifecycle true
+8 verbose lifecycle GUOWER@1.0.0~dev: PATH: C:\Users\mafei\Program Files\nodejs\node_global\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;C:\Users\mafei\Desktop\GUOWER\WEBSITE\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Java\jdk1.8.0_131\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;D:\tools\TortoiseSVN\bin;D:\android\sdk\platform-tools;D:\tools\Git\cmd;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;D:\Secure_Crt_Sfx\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\nodejs\npm_global;C:\Users\mafei\AppData\Local\Microsoft\WindowsApps;C:\Users\mafei\AppData\Roaming\npm;C:\Program Files\nodejs\node_modules\npm;C:\Program Files\nodejs;
+9 verbose lifecycle GUOWER@1.0.0~dev: CWD: C:\Users\mafei\Desktop\GUOWER\WEBSITE
+10 silly lifecycle GUOWER@1.0.0~dev: Args: [ '/d /s /c',
+10 silly lifecycle   'webpack-dev-server --inline --progress --config build/webpack.dev.conf.js' ]
+11 verbose stack Error: kill ENOSYS
+11 verbose stack     at process.kill (internal/process.js:182:13)
+11 verbose stack     at process.listener (C:\Users\mafei\Program Files\nodejs\node_global\node_modules\npm\node_modules\write-file-atomic\node_modules\signal-exit\index.js:95:15)
+11 verbose stack     at process.emit (events.js:182:13)
+12 verbose cwd C:\Users\mafei\Desktop\GUOWER\WEBSITE
+13 verbose Windows_NT 10.0.17134
+14 verbose argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\mafei\\Program Files\\nodejs\\node_global\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
+15 verbose node v10.5.0
+16 verbose npm  v6.1.0
+17 error code ENOSYS
+18 error errno ENOSYS
+19 error syscall kill
+20 error kill ENOSYS
+21 verbose exit [ 1, true ]

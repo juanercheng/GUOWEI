@@ -1,0 +1,125 @@
+.news-right-Ad-last{
+  margin-bottom: 30px;
+}
+.news-right-Ad{
+  margin-bottom: 10px;
+}
+.news-tab-li {
+  float: left;
+  font-size: 20px;
+  width: 12.5%;
+  height: 60px;
+  line-height: 60px;
+  color: #666;
+  background-color: #fafbfc;
+  cursor: pointer;
+}
+.top{
+  width: 100%;
+  background-image: url("../../../src/assets/images/cloumn/columnbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.user-img-s{
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin-top: 5.9%;
+  margin-bottom: 1.7%;
+}
+.user-name-a{
+  font-size: 24px;
+  margin-bottom: 1.7%;
+}
+.isAuthentication{
+  color: #fff;
+  background-color: rgba(241, 89, 41, 0.9);
+  padding: 5px 7px;
+  border-radius: 31px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+.user-info{
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  /*line-height: 36px;*/
+  letter-spacing: 0px;
+  color: #5b5b5b;
+  margin: 1.7% 0 5.35% 0;
+}
+.user-num{
+  width: 22%;
+  margin: 0 auto;
+  padding-bottom: 5.9%;
+}
+.user-num ul{
+  margin: 0;
+}
+.fristLi{
+  color: #5b5b5b;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+.special-img{
+  width: 21.1%;
+  margin-right: 2.6%;
+  height: 138px;
+}
+.special-list{
+  /*margin-top: 40px;*/
+  padding: 0 2.5%;
+}
+.special-item{
+  cursor: pointer;
+  padding: 3.68% 0;
+  border-bottom: 1px solid #ddd;
+}
+.special-item:hover{
+  background-color: #f6f6f6;
+}
+.special-item-bottom {
+  margin-bottom: 69px;
+}
+.special-right-box{
+  width: 76%;
+}
+.special-item:last-child {
+  border-bottom: none;
+}
+/*searchList*/
+.search-title{
+  font-size:14px;color: #999;text-align: left;margin-top: 3.65%;padding-left: 2.5%;
+  margin-bottom: 5px;
+}
+.top-search{
+  width: 100%;
+  background-image: url("../../../src/assets/images/searchbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.input-box{
+  height: 50px;
+  line-height: 50px;
+  padding: 75px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.search-inputs{
+  width: 560px;
+  padding-left: 21px;
+  font-size: 18px;
+  height: 50px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: solid 1px #e5e5e5;
+}
+.label-title{
+  font-size: 28px;
+  color: #ffffff;
+  padding: 4.5% 0;
+  background-image: url("../../../src/assets/images/labelbg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

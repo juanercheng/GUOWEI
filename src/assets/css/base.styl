@@ -1,0 +1,104 @@
+@media (-webkit-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)    //由于设备像素比存在的原因，我们在处理设计图的一些边框时，对于1px的border，如果在代码里将其写死，可能在不同设备像素比的设备中，粗细不一样，尤其是在目前大多数设备像素比为2的设备中，过粗
+  .border-1px
+  &:after
+    -webkit-transform scaleY(0.7)
+    transform scaleY(0.7)
+@media (-webkit-device-pixel-ratio: 2),(min-device-pixel-ratio: 2)
+  .border-1px
+  &:after
+    -webkit-transform scaleY(0.5)
+    transform scaleY(0.5)
+/*左右浮动*/
+.container{
+  margin 0 18.6%;
+  position relative;
+  font-family: MicrosoftYaHeiUI;
+  color #333
+}
+.el-message{
+  top:23%!important;
+}
+input::-ms-clear{display:none;}
+.fl{float:left}
+.rt{float:right}
+.cl{
+  clear: both;
+  overflow hidden
+}
+.text-center{
+  text-align: center;
+}
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+.flex-column{
+  display: flex;
+  display: -webkit-flex; /* Safari */
+  flex-direction: column;
+}
+.flex-row{
+  display: flex;
+  display: -webkit-flex; /* Safari */
+  flex-direction: row;
+}
+.justify-left{
+  justify-content: flex-start;
+}
+.justify-right{
+  justify-content: flex-end;
+}
+.justify-center{
+  justify-content: center;
+  align-items: center;
+}
+.justify-between{
+  justify-content: space-between;
+  align-items: center;
+}
+.justify-around{
+  justify-content: space-around;
+  align-items: center;
+}
+.img{
+  width :100%;
+  height :100%;
+}
+.relative{
+  position: relative
+}
+@media screen and (max-width: 1680px) {
+  .container{
+    margin 0 16%;
+  }
+  .el-col-5 {
+    width: 22.83333%;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .container{
+    margin 0 15%;
+  }
+  .el-col-5 {
+    width: 23%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .container{
+    margin 0 13%;
+  }
+  .el-col-5 {
+    width: 24%;
+  }
+}
+@media screen and (max-width: 1204px) {
+  .container{
+    margin 0 11%;
+  }
+  .el-col-5 {
+    width: 29%;
+  }
+}
