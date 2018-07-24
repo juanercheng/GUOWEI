@@ -1,6 +1,3 @@
-.news-right-Ad-last{
-  margin-bottom: 30px;
-}
 .news-right-Ad{
   margin-bottom: 10px;
 }
@@ -73,7 +70,7 @@
 .special-item{
   cursor: pointer;
   padding: 3.68% 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #f6f6f6;
 }
 .special-item:hover{
   background-color: #f6f6f6;
@@ -123,3 +120,18 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+@media screen and (max-width: 1280px) {
+  .special-img{
+    height: 124px;
+  }
+}
+@media screen and (max-width: 1204px) {
+  .special-img{
+    height: 97.7px;
+  }
+  .user-num ul{
+    padding-left: 0px;
+  }
+}
+
+

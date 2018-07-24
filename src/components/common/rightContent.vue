@@ -5,9 +5,10 @@
       <div class="new-item" v-for="(item,index) in guowerBox"
            :id="item.id"
            v-if="index<=0"
-           @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+           @click="BoxFun(item.jumpType,item.jumpUrl,item.id)"
            :key="item.id">
-        <img :src="item.image" class="img" style="height: 188px;margin-top: 30px"/>
+        <img :src="item.image"
+             class="img guowei-img" />
         <div style=" overflow: hidden;
                      text-overflow:ellipsis;
                      white-space: nowrap;"
@@ -17,30 +18,28 @@
           class="news-item-content">{{item.smallTitle}}</div>
         <div class="cl news-item-bottom"><div class="fl">{{item.releaseDate}}</div>
           <div class="rt">
-            <img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes}}
+            <img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes||0}}
           </div>
         </div>
       </div>
     </div>
     <div v-if="$parent.type==='column'">
       <div class="news text-left author" style="margin-top: 30px;margin-bottom: 30px;" v-if="authorList">
-
         <div class="news-title">作者排行</div>
         <div class="author-item cl" v-for="(item,index) in authorList"
              :key="item.id"
              v-if="index<=2"  v-on:click="columnSpecial(item.userId)">
           <div class="fl author-sort" >{{index+1}}</div>
           <div class="new-item-author fl"><img :src="item.headImg"/></div>
-          <div class="fl">
-            <div class="flex-row justify-center"
-                 style="cursor: pointer">
-              <div>{{item.nickName}}</div>
+          <div class="fl" style="width: 100%">
+            <div class="flex-row" style="align-items: center;width: 100%">
+              <div class="author-title-1 text-left" style="max-width: 50%;">{{item.nickName}}</div>
               <div v-if="item.userLevel===1"><span class="userLevel">认证企业</span></div>
               <div v-if="item.userLevel===2"><span class="userLevel">认证作者</span></div>
               <div v-if="item.userLevel===3"><span class="userLevel">认证媒体</span></div>
             </div>
             <div class="author-title-small">
-              <img src="../../../src/assets/images/home/eye.png"/> {{item.totalBrowse}}</div>
+              <img src="../../../src/assets/images/home/eye.png"/> {{item.totalBrowse||0}}</div>
           </div>
         </div>
       </div>
@@ -54,14 +53,10 @@
               class="flex-row cl eee">
           <div class="fl hotNews">
             <img class="img"
-                 :src="item.image "  />
+                 :src="item.smallImage "  />
           </div>
           <div class="fl hotNews2">
-            <div style="display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            line-height: 17px;
-            overflow: hidden;">{{item.title}}</div>
+            <div class="new-title-line2">{{item.title}}</div>
             <div class="realsdate">{{item.releaseDate}}</div>
           </div>
         </div>
@@ -73,24 +68,26 @@
     <div v-if="$parent.type==='column' && getHotNews.length>0"
          @click="change"
          class="more change" style="margin: 10px 0">换一换</div>
-    <div class="right-Ad-last news-right-Ad-last relative">
+    <div class="news-right-Ad-last relative" v-if="rightVideo.length!==0">
       <video v-if="videoType===1" class="img"  id="video" :src="rightVideo.jumpUrl">
         <source :src="rightVideo.jumpUrl" type="video/mp4">
       </video>
-      <iframe v-else class="img" :src="rightVideo.jumpUrl" ></iframe>
-      <div class="video-title cl" >
+      <iframe v-else class="img"
+              :src="rightVideo.jumpUrl"  ></iframe>
+      <div class="video-title cl"  >
         <div class="fl" style="margin-left: 11px">{{rightVideo.title}}</div>
-        <img class="rt" @click="play" v-if="!isPlay"
+        <img class="rt" @click="play" v-if="!isPlay&&videoType===1"
              src="../../../src/assets/images/bo.png"
              style="width: 24px;height: 24px ;margin-right: 14px">
-        <img class="rt" @click="pausePlay" v-else
+        <img class="rt" @click="pausePlay" v-else  v-if="videoType===1"
              src="../../../src/assets/images/stop.png"
              style="width: 24px;height: 24px ;margin-right: 14px">
       </div>
     </div>
     <div class="right-Ad-box  news-right-Ad relative"
+         :id="item.id" v-for="(item,index) in rightButton"
          @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
-         :id="item.id" v-for="(item,index) in rightButton" v-if="index<=2" >
+         v-if="rightButton||index<=2" >
       <img :src='item.image' class="img"/>
       <div class="advertisement-text">广告</div>
     </div>
@@ -104,8 +101,10 @@ export default {
   data(){
     return{
       AdvertisementUrl:API.api.news.newsAdvertisement, //首页广告接口
+      newsColumnAdvertisementUrl:API.api.express.newsColumnAdvertisement,
       getAuthorColUrl:API.api.express.getAuthorCol, //首页广告接口
       getHotNewsUrl:API.api.news.getHotNews,//热门文章
+      updateLookTimesUrl:API.api.express.updateLookTimes,//热门文章
       rightVideo:{},
       videoType:null,
       rightButton:[],
@@ -132,14 +131,15 @@ export default {
             data.guowerBox[i].releaseDate=_this.format(data.guowerBox[i].releaseDate)  //修改时间格式
           }
           _this.guowerBox = data.guowerBox;
-          console.log(' _this.guowerBox ', _this.guowerBox )
           for (var i in rightVideo){
             _this.rightVideo=rightVideo[0]
           }
-          if(_this.rightVideo.jumpUrl.indexOf('html')!=-1){
-            _this.videoType=0
-          }else {
-            _this.videoType=1
+          if(_this.rightVideo.jumpUrl){
+            if(_this.rightVideo.jumpUrl.indexOf('html')!=-1){
+              _this.videoType=0
+            }else {
+              _this.videoType=1
+            }
           }
         }
       }, (res) => {
@@ -213,12 +213,6 @@ export default {
         this.getList()
       }
     },
-    columnSpecial:function (id) {
-      this.$router.push({
-        path: './columnSpecial',
-        query:{id:id}
-      })
-    },
     play:function () {
       this.isPlay=true
       document.getElementById('video').play()
@@ -226,14 +220,38 @@ export default {
     pausePlay:function () {
       this.isPlay=false
       document.getElementById('video').pause();
+    },
+    BoxFun:function (jumpType,jumpUrl,id) {
+      let _this = this
+      let params = {
+        id:id
+      }
+      let newTab=window.open(jumpUrl);
+      _this.getData(_this.updateLookTimesUrl,params,function (res) {
+        if (res.code === 0) {
+          if(jumpType===1){
+            newTab.location.href=jumpUrl;
+          }else if(jumpType===2){
+
+          }else if(jumpType===3){
+
+          }else {
+            _this.$router.push({
+              path: './newsDetails',
+              query:{id:id}
+            })
+          }
+        }
+      })
+
     }
   },
   mounted(){
-    // if(this.$parent.type==='news'){
-    //   // this.AdvertisementUrl=API.api.news.newsAdvertisement
-    // }else {
-    //   // this.AdvertisementUrl=API.api.news.newsAdvertisement
-    // }
+    if(this.$parent.type==='column'){
+      this.AdvertisementUrl=API.api.express.newsColumnAdvertisement
+    }else {
+      this.AdvertisementUrl=API.api.news.newsAdvertisement
+    }
     this.Advertisement()
     this.getList()
   },
@@ -267,4 +285,16 @@ export default {
     font-size: 14px;
     color: #999;
   }
+
+  @media screen and (max-width: 1280px) {
+    .hotNews,.hotNews2{
+      height: 62px;
+    }
+  }
+  @media screen and (max-width: 1204px) {
+    .hotNews,.hotNews2{
+      height: 46px;
+    }
+  }
+
 </style>

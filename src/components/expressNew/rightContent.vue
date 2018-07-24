@@ -10,10 +10,10 @@
             class="flex-row cl eee">
         <div class="fl hotNews">
           <img class="img"
-               :src="item.image "  />
+               :src="item.smallImage "  />
         </div>
         <div class="fl hotNews2">
-          <div style="display: -webkit-box;-webkit-box-orient: vertical;line-height: 17px;-webkit-line-clamp: 2;overflow: hidden;">{{item.title}}</div>
+          <div class="new-title-line2">{{item.title}}</div>
           <div class="author-title-small-express">{{item.releaseDate}}</div>
         </div>
       </div>
@@ -124,10 +124,30 @@ export default {
   .hotNews2{
     text-align: left;
     width: 64.7%;
-    height: 69px;
+    height: 68px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-content: space-between;
   }
+  .realsdate{
+    font-size: 14px;
+    color: #999;
+  }
+  @media screen and (max-width: 1280px) {
+    .hotNews,.hotNews2{
+      height: 62px;
+    }
+  }
+  @media screen and (max-width: 1204px) {
+    .hotNews,.hotNews2{
+      height: 46px;
+    }
+  }
+  @media screen and (max-width: 428px) {
+    .hotNews, .hotNews2 {
+      height: 72px;
+    }
+  }
+
 </style>

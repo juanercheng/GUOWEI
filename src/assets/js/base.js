@@ -3,8 +3,8 @@ function getUrlPath() {
   return window.location.protocol + '//' + window.location.host + '/' ;
 }
 // const domain=getUrlPath()+'guower/api/';
-
-// const domain = 'http://192.168.0.110:8981/guower/api/';
+//
+// const domain = 'http://192.168.0.107:8981/guower/api/';
 const domain = 'http://chijun.xin/guower/api/';
 
 exports.install = function (Vue, options) {
@@ -37,9 +37,15 @@ exports.install = function (Vue, options) {
       query:{id:id}
     })
   },
+  Vue.prototype.columnSpecial =function(id) {
+    this.$router.push({
+      path: './columnSpecial',
+      query:{id:id}
+    })
+  },
   //广告/banner跳转：
   Vue.prototype.goNewUrl=function(jumpType,jumpUrl,id) {
-    console.log(jumpUrl)
+    console.log('jumpUrl',jumpUrl,jumpType)
     if(jumpType===1){
       window.open(jumpUrl, '_blank')
     }else if(jumpType===2){

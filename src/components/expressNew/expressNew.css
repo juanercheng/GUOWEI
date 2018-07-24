@@ -44,21 +44,21 @@
   margin-bottom: 32px;
   cursor: pointer;
 }
-#share{
+#share,#share1{
   padding-left:10px;
 }
-#share li{
+#share li,#share1 li{
   align-items: center;
   cursor: pointer;
 }
-#share img{
+#share img,#share1 img{
   margin: 5px;
   margin-right: 10px;
 }
 .author-title-small-express{
   font-size: 14px;
   color: #999;
-  margin-top: 20px;
+  /*margin-top: 20px;*/
 }
 .author-item-express{
   padding-bottom: 30px;
@@ -101,6 +101,9 @@
   left: 0;
   z-index: 9999;
 }
-/*.tab-con text-left:nth-child(4){*/
-  /*border-bottom: none;*/
-/*}*/
+
+@media screen and (max-width: 428px) {
+ .container{
+   width: 100%;
+ }
+}

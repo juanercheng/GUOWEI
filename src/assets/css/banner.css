@@ -33,3 +33,13 @@
   /*color: #fff;*/
   /*font-size: 18px;*/
 /*}*/
+@media screen and (max-width: 1280px) {
+  .el-carousel__container{
+    height:360px ;
+  }
+}
+@media screen and (max-width: 1204px) {
+  .el-carousel__container{
+    height:283px ;
+  }
+}

@@ -60,12 +60,14 @@ export default {
       newsType:[]
     }
   },
+
   components: {
     'v-home-content': HomeContent,
     'v-right-content': RightContent,
     'v-banner': Banner,
   },
   methods:{
+
     homeAdvertisement:function(){
       let _this = this
       let params={
@@ -75,20 +77,20 @@ export default {
         if (res.code === 0) {
           let data = res.object;
           _this.topAdvertisement=data.homeHead;
-          console.log(data)
+          console.log('topAdvertisement',data.homeHead)
           for (var i in data.homeRight){
             _this.rightAd1=data.homeRight[0]
             _this.rightAd2=data.homeRight[1]
             _this.rightAd3=data.homeRight[2]
           }
-
         }
       }, (res) => {
         console.log(res)
       })
+
       //home APi
       let params1={
-        token:sessionStorage.getItem('token')
+        // token:sessionStorage.getItem('token')
       }
       _this.getData(_this.homeUrl,params1,function (res) {
         if (res.code === 0) {
@@ -99,6 +101,7 @@ export default {
           for(var i in data1){
             data1[i].releaseDate=_this.format(data1[i].releaseDate)
           }
+          console.log(res)
           _this.homeBanner=data.homeBanner;
           _this.busfastnews=data1;
           _this.authorList=data2;
@@ -109,12 +112,16 @@ export default {
       }, (res) => {
         console.log(res)
       })
+      setTimeout(function(){
+        _this.$emit('is-footer', true)
+      },1000);
     },
   },
   mounted(){
-    this.$emit('is-footer', true)
+    this.$emit('is-footer', false)
     this.homeAdvertisement()
   },
+
 }
 </script>
 

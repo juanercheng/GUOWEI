@@ -94,6 +94,7 @@ export default {
     },
     send:function (id) {
       this.$emit('child-msg',2,id)
+      // this.$emit('nav-fun', {first:'个人中心', second:'兑换记录', third:'兑换详情', fourth:null});
     }
   },
   mounted(){

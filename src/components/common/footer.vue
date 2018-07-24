@@ -8,9 +8,9 @@
               <el-col :span="24"><div class="grid-content bg-purple"><div class="title">战略合作</div></div></el-col>
               <el-col :span="4"  class="test1" v-for="item in data1" :key="item.id">
                 <div class="grid-content bg-purple">
-                  <a :href="item.remarks1" target="_blank">
-                    <img :src='item.remarks' style="width:102px;height: 27px">
-                  </a>
+                  <img :src='item.image'
+                       @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+                       style="width:102px;height: 27px">
                 </div>
               </el-col>
              </el-row>
@@ -22,9 +22,9 @@
               <el-col :span="24"><div class="grid-content bg-purple"><div class="title">合作内容</div></div></el-col>
               <el-col :span="4"  class="test1" v-for="item in data2" :key="item.id">
                 <div class="grid-content bg-purple">
-                  <a :href="item.remarks1" target="_blank">
-                    <img :src='item.remarks' style="width: 86px;height: 27px">
-                  </a>
+                  <img :src='item.image'
+                       @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+                       style="width: 86px;height: 27px">
                 </div>
               </el-col>
              </el-row>
@@ -40,7 +40,7 @@
           <router-link :to="{name:'about',params:{titleName:'aboutUs'}}" class="small"><span>关于我们</span></router-link>
           <router-link :to="{name:'about',params:{titleName:'joinUs'}}" class="small"><span>加入我们</span></router-link>
           <router-link :to="{name:'about',params:{titleName:'contactUs'}}" class="small"><span>联系我们</span></router-link>
-          <router-link :to="{name:'about',params:{titleName:'copyrightNotice'}}" class="small"><span style="border-right: none">版权声明</span></router-link>
+          <router-link :to="{name:'about',params:{titleName:'copyrightNotice'}}" class="small"><span style="border-right: none">版权申明</span></router-link>
         </div>
       </div>
       <div style="clear: both"></div>
@@ -54,7 +54,8 @@
     name: "footerGuo",
     data(){
       return{
-        cfgUrl:API.api.cfg.dictInfo,
+        cooperationContent:API.api.cfg.cooperationContent,
+        strategicCooperation:API.api.cfg.strategicCooperation,
         data1:null,
         data2:null,
       }
@@ -63,19 +64,15 @@
       getDatas:function () {
         let _this = this
         let params = {
-          code:'TYPE_STRATEGIC_COOPERATION'
+          pageCurrent:1,
+          pageSize:100,
         };
-        let params1 = {
-          code:'TYPE_COOPERATION_CONTENT'
-        };
-        _this.getData(_this.cfgUrl,params,function (res) {
-          console.log('TYPE_STRATEGIC_COOPERATION',res)
+        _this.getData(_this.cooperationContent,params,function (res) {
           if(res.code===0){
             _this.data1=res.object
           }
         });
-        _this.getData(_this.cfgUrl,params1,function (res) {
-          console.log('TYPE_COOPERATION_CONTENT',res)
+        _this.getData(_this.strategicCooperation,params,function (res) {
           if(res.code===0){
             _this.data2=res.object
           }

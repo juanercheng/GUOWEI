@@ -3,8 +3,8 @@
   <div class="container cl">
     <el-breadcrumb separator-class="el-icon-arrow-right"
                    style="font-size: 12px;color: #666;margin: 20px 0 39px 0;position: absolute; top: 0%;left: 0%;">
-      <el-breadcrumb-item>文章 ></el-breadcrumb-item>
-      <el-breadcrumb-item >文章详情</el-breadcrumb-item>
+      <el-breadcrumb-item>文章 > </el-breadcrumb-item>
+      <el-breadcrumb-item >  文章详情</el-breadcrumb-item>
     </el-breadcrumb>
     <!--左边布局-->
     <div class="f_content fl" v-if="datas">
@@ -12,17 +12,32 @@
       <div class="title" >
         <img src="../../../src/assets/images/home/hot.png" alt="" v-if="datas.tag===1" style="margin-right: 18px">
         <img src="../../../src/assets/images/home/new.png" alt="" v-if="datas.tag===2" style="margin-right: 18px">
-        <span style="font-size: 25px;font-weight: bolder;width: 799px;height: 65px;">{{datas.title}}</span>
+        <span style="	width: 799px;
+	height: 65px;
+	font-family: MicrosoftYaHeiUI;
+	font-size: 26px;
+	font-weight: normal;
+	font-stretch: normal;
+	line-height: 39px;
+	letter-spacing: 0px;
+	color: #2f2f2f;">{{datas.title}}</span>
       </div>
       <!--第二行的label-->
       <div class="details-label" >
-        <span class="label_one" style="font-size: 14px;">{{datas.authorName}}</span>
+        <span class="label_one"
+              v-on:click="columnSpecial(datas.author)"
+              style="font-size: 14px;cursor: pointer">{{datas.authorName}}</span>
         <span class="label_two " style="font-size: 14px;">{{datas.releaseDate}}</span>
-        <span class="label_three" style="width: 110px; font-size: 14px;padding-right: 33px" v-if="datas.tag1||datas.tag2||datas.tag3"><img src="../../../src/assets/images/home/label.png" alt="" style="padding-right: 10px"> {{datas.tag1}} {{datas.tag2}} {{datas.tag2}}</span>
+        <span class="label_three" style="width: 110px; font-size: 14px;padding-right: 33px" v-if="datas.tag1||datas.tag2||datas.tag3">
+          <img src="../../../src/assets/images/home/label.png" alt="" style="padding-right: 10px">
+          <i @click="goLabel(datas.tag1)" style="font-style: normal;cursor: pointer">{{datas.tag1}}</i>
+          <i @click="goLabel(datas.tag2)" style="font-style: normal;margin: 0 3px;cursor: pointer">{{datas.tag2}}</i>
+          <i @click="goLabel(datas.tag3)" style="font-style: normal;cursor: pointer">{{datas.tag3}}</i>
+        </span>
         <span class="label_four" style="width: 44px; font-size: 14px;"><img src="../../../src/assets/images/home/eye.png" style="margin-right: 4px">  {{datas.lookTimes||0}}</span>
       </div>
       <div class="mainText" >
-        <img :src="datas.image" v-if="datas.image" class="img" >
+        <img :src="datas.image" v-if="datas.image" class="img">
         <div v-html="datas.mainText">{{datas.mainText}}</div>
       </div>
       <div style="width: 100%;font-size:16px;font-weight:normal;line-height:36px;	color:#5b5b5b;background-color: #f7f9fa;padding: 15px 0 15px 16px">
@@ -64,7 +79,9 @@
     <!--右边布局-->
     <!--广告标签样式没调好，有bug-->
     <div class="rt left-con" v-if="AdData">
-      <div class="img1" v-for="(item,index) in AdData" :key="index" :id="item.id" >
+      <div class="img1" v-for="(item,index) in AdData"
+           @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+           :key="index" :id="item.id" >
         <img :src="item.image"/>
         <!--广告小标题-->
         <div class="mask">广告</div>
@@ -128,6 +145,9 @@
         }, (res) => {
           console.log(res)
         })
+        setTimeout(function(){
+          _this.$emit('is-footer', true)
+        },1000);
       },
       weiChat:function () {
         let _this = this
@@ -173,6 +193,7 @@
     },
     mounted(){
       this.id=this.$route.query.id
+      this.$emit('is-footer', false)
       this.getAdData()
       this.getDetails()
     }

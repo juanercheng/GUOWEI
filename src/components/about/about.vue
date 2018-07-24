@@ -10,7 +10,7 @@
         :label="item.label"
         :name="item.name"
       >
-        <div class="el-tab-content" ref="elTabContent" v-html="item.content">{{item.content}}</div>
+        <div class="el-tab-content" ref="elTabContent" v-html="item.content" style="font-family: MicrosoftYaHeiUI;	font-size: 18px;	font-weight: normal;font-stretch: normal;line-height: 36px;letter-spacing: 0px;	color: #333333;">{{item.content}}</div>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -27,7 +27,7 @@
         editableTabs:[{id:0,label:'关于我们',name:'aboutUs',content:''},
           {id:1,label:'加入我们',name:'joinUs',content:''},
           {id:2,label:'联系我们',name:'contactUs',content:''},
-          {id:3,label:'版权声明',name:'copyrightNotice',content:''}],
+          {id:3,label:'版权申明',name:'copyrightNotice',content:''}],
         parms:{
           aboutUs:'CLAUSE_ABOUT',
           joinUs:'JOIN_ME',

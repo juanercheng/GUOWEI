@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @click="hidePanel">
+  <div id="app">
     <v-header :token="token" v-on:is-login="things"></v-header>
     <router-view v-on:is-login="things" v-on:is-footer="things1"/>
     <v-footer v-show="footer"></v-footer>
@@ -45,10 +45,11 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: MicrosoftYaHeiUI;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  /*height: 91%;*/
 }
 </style>

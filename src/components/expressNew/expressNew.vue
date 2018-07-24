@@ -1,6 +1,8 @@
 <template>
-  <div class="container cl" style="overflow: hidden">
-    <div class="content-left">
+
+  <div class="container cl container-fluid" style="overflow: hidden">
+
+    <div class="content-left ">
       <div class="content-home cl">
         <ul class="tabs express-tabs" v-if="tabs">
           <li class="tab-li express-tabs-li"
@@ -11,50 +13,99 @@
             <span>{{item.text}}</span>
           </li>
         </ul>
-        <div class="tab-con text-left" v-if="data">
-          <div class="con-item"
-               v-for="(item,index) in data"
-               :id="item.id"
-               :key="index">
-            <div class="con-item-title">{{item.title}}</div>
-            <div class="con-item-con">{{item.mainText}}</div>
-            <div class="item-bottom cl">
-              <div class="fl">
-                <div class="cl">
-                  <!--<div class="fl item-bottom-left">{{item.releaseUserName}}</div>-->
-                  <div class="fl item-bottom-left">{{item.releaseDate}}</div>
-                  <div class="fl item-bottom-left">
-                    <img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes}}</div>
+        <div class="tab-con text-left">
+          <div v-if="type===1">
+            <div class="con-item"
+                 v-for="(item,index) in data"
+                 :id="item.id"
+                 :key="index">
+              <div class="con-item-title">{{item.title}}</div>
+              <div class="con-item-con">{{item.mainText}}</div>
+              <div class="item-bottom cl">
+                <div class="fl">
+                  <div class="cl">
+                    <!--<div class="fl item-bottom-left">{{item.releaseUserName}}</div>-->
+                    <div class="fl item-bottom-left">{{item.releaseDate}}</div>
+                    <div class="fl item-bottom-left">
+                      <img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes||0}}</div>
+                  </div>
+                </div>
+                <div class="rt share">
+                  <el-popover
+                    placement="right"
+                    width="100"
+                    trigger="click">
+                    <div class="text-left">
+                      <div>分享到：</div>
+                      <ul id="share">
+                        <li  class="flex-row" @click="weiChat">
+                          <img src="../../../src/assets/images/news/weixin.png" alt=""
+                          >
+                          <div>微信</div>
+                        </li>
+                        <li class="flex-row" @click="qqClick(item)">
+                          <img  src="../../../src/assets/images/news/qq.png" alt="">
+                          <div>QQ</div>
+                        </li>
+                        <li class="flex-row " @click="weibo(item)">
+                          <img  src="../../../src/assets/images/news/weibo.png" alt="">
+                          <div>微博</div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div slot="reference">
+                      <img src="../../../src/assets/images/share.png" class="icon"/>分享
+                    </div>
+                  </el-popover>
+
                 </div>
               </div>
-              <div class="rt share">
-                <el-popover
-                  placement="right"
-                  width="100"
-                  trigger="click">
-                  <div class="text-left">
-                    <div>分享到：</div>
-                    <ul id="share">
-                      <li  class="flex-row" @click="weiChat">
-                        <img src="../../../src/assets/images/news/weixin.png" alt=""
-                        >
-                        <div>微信</div>
-                      </li>
-                      <li class="flex-row" @click="qqClick(item)">
-                        <img  src="../../../src/assets/images/news/qq.png" alt="">
-                        <div>QQ</div>
-                      </li>
-                      <li class="flex-row " @click="weibo(item)">
-                        <img  src="../../../src/assets/images/news/weibo.png" alt="">
-                        <div>微博</div>
-                      </li>
-                    </ul>
+            </div>
+          </div>
+          <div v-else>
+            <div class="con-item"
+                 v-for="(item,index) in data"
+                 :key="index">
+              <div class="con-item-title">{{item.mblog.page_info.page_title}}</div>
+              <div class="con-item-con" v-html="item.mblog.text">{{item.mblog.text}}</div>
+              <div class="item-bottom cl">
+                <div class="fl">
+                  <div class="cl">
+                    <!--<div class="fl item-bottom-left">{{item.releaseUserName}}</div>-->
+                    <div class="fl item-bottom-left">{{item.mblog.created_at}}</div>
+                    <div class="fl item-bottom-left">
+                      <img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes||0}}</div>
                   </div>
-                  <div slot="reference">
-                    <img src="../../../src/assets/images/share.png" class="icon"/>分享
-                  </div>
-                </el-popover>
+                </div>
+                <div class="rt share">
+                  <el-popover
+                    placement="right"
+                    width="100"
+                    trigger="hover">
+                    <div class="text-left">
+                      <div>分享到：</div>
+                      <ul id="share1">
+                        <li  class="flex-row" @click="weiChat">
+                          <img src="../../../src/assets/images/news/weixin.png" alt=""
+                          >
+                          <div>微信</div>
+                        </li>
+                        <li class="flex-row" @click="qqClick(item)">
+                          <img  src="../../../src/assets/images/news/qq.png" alt="">
+                          <div>QQ</div>
+                        </li>
+                        <li class="flex-row " @click="weibo(item)">
+                          <img  src="../../../src/assets/images/news/weibo.png" alt="">
+                          <div>微博</div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div slot="reference">
+                      <img src="../../../src/assets/images/share.png" class="icon"/>分享
+                    </div>
+                  </el-popover>
 
+                </div>
               </div>
             </div>
           </div>
@@ -62,7 +113,7 @@
         </div>
       </div>
     </div>
-    <div class="content-right">
+    <div class="content-right ">
       <v-right-content></v-right-content>
     </div>
     <div class="mask-id" v-show="wechatSHareShow">
@@ -73,19 +124,24 @@
         <div>分享至好友和朋友圈</div>
       </div>
     </div>
+
   </div>
+
 </template>
 
 <script>
   import QRCode from 'qrcodejs2'
   import API from  './../../assets/js/api'
   import RightContent from './rightContent'
+
   export default {
     name: "expressNew",
     data(){
       return{
         busfastnewsUrl:API.api.express.busfastnews,
+        weiboUrl:API.api.express.weibo,
         data:[],
+        type:1,
         active:0,
         pageCurrent:1,
         more:true,
@@ -105,18 +161,17 @@
     },
     methods:{
       tabsClick:function (id) {
-        console.log(id)
         let _this = this
         this.active = id;
         _this.moreMsg = '正在加载...';
         _this.pageCurrent=1;
         _this.data=[];
         if(id===0){
+          _this.type=1
           _this.DataList()
         }else {
-          _this.moreMsg = '暂无数据';
-          _this.pageCurrent=1;
-          _this.data=[];
+          _this.type=2
+          _this.weiboList()
         }
       },
       DataList:function(){
@@ -160,12 +215,58 @@
         }, (res) => {
           console.log(res)
         })
+        setTimeout(function(){
+          _this.$emit('is-footer', true)
+        },1000);
+      },
+      weiboList:function(){ //weiboUrl
+        let _this = this
+        let params={
+          pageCurrent:_this.pageCurrent,
+          pageSize:5,
+        };
+        _this.postData(_this.weiboUrl,params,function (res) {
+          if (res.code === 0) {
+            let data = res.object.data.cards;
+            console.log('weiboList',data)
+            let dataBlob = [];
+            if(data.length>0){
+              data.map(function (item) {
+                dataBlob.push(item)
+              });
+            }
+            _this.moreMsg = '加载更多';
+            if(_this.pageCurrent===1){
+              _this.data=dataBlob;
+              if(data.length===0){
+                _this.moreMsg = '暂无数据'
+              }else if(data.length<5){
+                _this.more = false
+              }else {
+                _this.more = true
+              }
+            }else {
+              _this.data=_this.data.concat(dataBlob)
+              if(data.length===0||data.length<5){
+                _this.moreMsg = '加载完毕'
+              }
+            }
+            data = null;
+            dataBlob = null;
+          }
+        }, (res) => {
+          console.log(res)
+        })
       },
       getMore:function () {
         let _this = this
         _this.moreMsg = '正在加载...'
         _this.pageCurrent ++
-        this.DataList()
+        if(_this.type===1){
+          this.DataList()
+        }else {
+          this.weiboList()
+        }
       },
       weiChat:function () {
         let _this = this;
@@ -220,7 +321,7 @@
       'v-right-content': RightContent
     },
     mounted(){
-      this.$emit('is-footer', true)
+      this.$emit('is-footer', false)
       this.DataList()
     }
   }

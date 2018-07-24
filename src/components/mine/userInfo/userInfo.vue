@@ -1,9 +1,5 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item><span v-on:click="$store.commit('SetSaveData',false)">个人中心</span></el-breadcrumb-item>
-      <el-breadcrumb-item v-show="$store.state.isEdit"><span style="margin:0 5px">></span>编辑</el-breadcrumb-item>
-    </el-breadcrumb>
     <div class="user-con">
       <div v-if="isSuccess">
         <v-success ref="Success"></v-success>
@@ -12,7 +8,17 @@
         <div v-if="!$store.state.isEdit">
           <div class="text-right flex-row justify-right">
             <img src="../../../assets/images/mine/edit.png"/>
-            <span class="edit-text" v-on:click="$store.commit('SetSaveData',true)">编辑资料</span>
+            <span class="edit-text"
+                  v-on:click="
+                  $store.commit('SetSaveData',true);
+                  $emit('nav-fun',
+                    {
+                      first:'个人中心',
+                      second:'编辑',
+                      third:null,
+                      fourth:null
+                    });"
+            >编辑资料</span>
           </div>
           <div style="position: relative;" class="user-img-con">
             <img :src="headPortrait?headPortrait:require('../../../assets/images/mine/touxiang.png')"
@@ -108,13 +114,13 @@ export default {
                 data.userLevel = '未认证'
                 break
               case 1:
-                data.userLevel = '企业认证'
+                data.userLevel = '认证企业'
                 break
               case 2:
-                data.userLevel = '作者认证'
+                data.userLevel = '认证作者'
                 break
               case 3:
-                data.userLevel = '媒体认证'
+                data.userLevel = '认证媒体'
                 break
             }
             if (data.authStatus===0){
@@ -213,6 +219,7 @@ export default {
       _this.PostJson(_this.updateInfoUrl,params,function (res) {
         if(res.code===0){
           _this.$emit('is-update', true);  //更新父组件个人信息
+          _this.$emit('nav-fun', {first:'个人中心', second:'提交成功', third:null, fourth:null});//更新父组件nav信息
           sessionStorage.setItem('headPortrait',res.object.headPortrait)
           _this.$store.commit('setUpheadPortrait',res.object.headPortrait)
           setTimeout(function(){
@@ -254,6 +261,7 @@ export default {
   },
   beforeDestroy(){
     this.$store.commit('SetSaveData',false)
+    this.$emit('nav-fun', {first:'个人中心', second:null, third:null, fourth:null});
   }
   // beforeRouteLeave (to, from, next) {
   //   if(this.$store.state.isEdit===true){
@@ -274,20 +282,4 @@ export default {
 
 <style>
   @import "../mine.css";
-  @media screen and (max-width: 1850px) {
-
-  }
-  @media screen and (max-width: 1600px) {
-
-  }
-
-  @media screen and (max-width: 1400px) {
-
-  }
-  @media screen and (max-width: 1280px) {
-
-  }
-  @media screen and (max-width: 1204px) {
-
-  }
 </style>

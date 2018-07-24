@@ -11,6 +11,8 @@ import ElementUI from 'element-ui'
 import global from './assets/js/config'
 import base from './assets/js/base'
 import store from './assets/js/store'
+// import 'bootstrap/dist/css/bootstrap.css/bootstrap.min.css'
+// import 'bootstrap/dist/js/bootstrap'
 // import 'babel-polyfill'
 // import filters from './assets/js/filters'
 
@@ -34,6 +36,7 @@ new Vue({
 })
 //个人中心登录判断
 router.beforeEach((to, from, next) => {
+  router.app.$options.store.commit('SetSearch',false)
   let token = sessionStorage.getItem('token')
   if (to.meta.requireAuth && (!token || token === null)) {
     next({
@@ -41,6 +44,7 @@ router.beforeEach((to, from, next) => {
       query: { redirect: to.fullPath }
     })
   }else {
+
     next()
   }
 })

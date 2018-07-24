@@ -1,19 +1,19 @@
 <template >
   <div class="header-line"  style="position: relative"  >
-    <div class="container header-text " style="padding: 21px 0" >
-      <el-row class="content">
+    <div class="container header-text " style="padding: 20px 0" >
+      <el-row class="content" >
         <el-col :span="14">
           <div class="grid-content bg-purple left">
             <el-row class="content" >
               <el-col :span="5">
                 <div class="grid-content bg-purple"
-                     style="overflow: hidden;text-align: left;height: 44px;width:143px;margin-right: 4%">
+                     style="overflow: hidden;text-align: left;height: 44px;width:143px;">
                   <router-link to="/">
                     <img src="../../../src/assets/images/logo.png" class="img">
                   </router-link>
                 </div>
               </el-col>
-              <el-col :span="3">
+              <el-col :span="3" style="margin-left: 4%">
                 <div class="grid-content bg-purple">
                 <router-link
                   to="/Dashboard"
@@ -47,10 +47,12 @@
             <el-row   class="right-text" style="display: flex;flex-direction: row;justify-content: space-between;align-items: center">
               <el-col  :span="10" :style="$store.state.isSearch?'text-align:center':'text-align:right'">
                 <div class="grid-content bg-purple">
-                  <div v-if="!$store.state.isSearch" style="position: relative">
+                  <div v-if="!$store.state.isSearch"
+                       v-on:click="$store.commit('SetSearch',true)"
+                       style="position: relative">
                     <img src="./../../../src/assets/images/search.png"
                          class="search-img1 i-img"
-                         v-on:click="$store.commit('SetSearch',true)"/>
+                         />
                     搜索
                   </div>
                   <div v-else class="search" id="search">
@@ -65,7 +67,7 @@
                     <img v-if="isClicked"
                          src="./../../../src/assets/images/delete.png"
                          class="delete-btn i-img"
-                         v-on:click="search='';$store.commit('SetSearchData',false)"/>
+                         v-on:click="search='';$store.commit('SetSearch',false)"/>
                   </div>
                 </div>
               </el-col>
@@ -91,8 +93,9 @@
                     <img src="./../../../src/assets/images/login.png"/>
                     <router-link to="/login" ><span style="color: #333;font-size: 16px">登录/注册</span></router-link>
                   </div>
-                  <div v-else style="display: flex;flex-direction: row;align-items: center;justify-content: flex-end" class="loginBox">
-                    <el-dropdown trigger="click"
+                  <div v-else
+                       class="loginBox">
+                    <el-dropdown trigger="click" slot="dropdown"
                                  @command="handleCommand">
                       <div class="el-dropdown-link flex-row justify-center">
                         <img :src="$store.state.userInfo" class="user-imgs"/>
@@ -139,17 +142,7 @@ export default {
   methods: {
     doSearch:function () {
       if(!this.search){
-        this.$message.error({
-          message: '请输入关键字进行搜索',
-          center: true
-        })
-        // this.$alert('请输入关键字', '温馨提示', {
-        //   confirmButtonText: '确定',
-        //   type: 'warning',
-        //   callback: action => {
-        //     console.log(32)
-        //   }
-        // });
+        return
       }else {
         this.$store.commit('SetSearchData',true)
         this.$router.push({
@@ -203,10 +196,18 @@ export default {
 .header-line{
   border-bottom: 1px solid #ddd;
 }
+.loginBox{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:flex-end;
+  position: relative;
+}
 .content{
   display: flex;
   align-content: center;
   align-items: center;
+  position: relative;
 }
 .bg-purple{
   cursor: pointer;
@@ -263,7 +264,7 @@ export default {
   height: 14px;
   top: 1px;
 }
-.{
+.search-input{
   border: none;
   font-size: 16px;
   /*padding-left: 20px;*/
@@ -299,9 +300,15 @@ export default {
   border-radius: 50px;
 }
 .el-col-3 {
-  width: 13.5%;
+  width: 13.5% !important;
 }
 .el-col-7 {
-  width: 27.16667%;
+  width: 27.16667% !important;
+  /*margin-right: 4% !important;*/
+}
+@media screen and (max-width: 428px) {
+  .header-text{
+   display: none;
+  }
 }
 </style>

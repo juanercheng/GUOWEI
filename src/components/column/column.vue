@@ -41,20 +41,21 @@ export default {
         pageSize:30,
       };
       _this.getData(_this.Url,params,function (res) {
-        // console.log(res)
         if (res.code === 0) {
           let data = res.object;
-          _this.otherBanner = data
-          console.log('_this.otherBanner',_this.otherBanner)
-          debugger
+          _this.otherBanner = data;
+          _this.$emit('is-footer', true)
         }
       }, (res) => {
         console.log(res)
       })
+      setTimeout(function(){
+        _this.$emit('is-footer', true)
+      },1000);
     }
   },
   mounted(){
-    this.$emit('is-footer', true)
+    this.$emit('is-footer', false)
     this.getTabs()
   },
 }

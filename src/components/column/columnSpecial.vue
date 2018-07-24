@@ -23,7 +23,8 @@
     </div>
   </div>
   <div class="container">
-    <div class="special-list" v-if="dataList">
+    <div class="special-list" v-if="dataList"
+         :style="dataList.length===0?'min-height:90px':null">
       <div class="special-item cl"
            v-for="item in dataList"
            :id="item.id"
@@ -34,12 +35,10 @@
         <div class="home-content-right-box special-right-box fl">
           <div>
             <div class="cl" style="overflow:hidden;margin-bottom: 21px">
-              <img v-show="item.isNew" src="../../../src/assets/images/home/new.png" class="label-icon"/>
-              <img v-show="item.isHotspot===1" src="../../../src/assets/images/home/hot.png" class="label-icon"/>
               <div>
                 <a  v-on:click="goDetails(item.id)"
-                       style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;"
-                       class="item-title-common">{{item.title}}</a>
+                    style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;overflow: hidden;font-weight: bold"
+                    class="item-title-common">{{item.title}}</a>
               </div>
             </div>
             <div class="item-content"
@@ -93,7 +92,6 @@ export default {
       let _this = this
       let id = _this.id
       _this.GetJson(_this.authorUrl,id,function (res) {
-        console.log(res.object)
         if (res.code === 0) {
           let data = res.object;
           _this.authorData = data

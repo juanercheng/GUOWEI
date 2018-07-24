@@ -1,7 +1,14 @@
 <template>
 <div class="content-mine">
   <div class="container">
-    <div style="height: 60px;width: 100%"></div>
+    <div>
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item><span v-on:click="$store.commit('SetSaveData',false)">{{nav.first}}</span></el-breadcrumb-item>
+        <el-breadcrumb-item v-if="nav.second"><span style="margin:0 5px">></span>{{nav.second}}</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="nav.third"><span style="margin:0 5px">></span>{{nav.third}}</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="nav.fourth"><span style="margin:0 5px">></span>{{nav.fourth}}</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="con-box cl">
       <div class="left-mine fl ">
         <div class="left-user" @click="goUserInfo">
@@ -24,7 +31,7 @@
           </div>
       </div>
       <div class="right-mine fl ">
-        <router-view v-on:is-update="things"></router-view>
+        <router-view v-on:is-update="things" v-on:nav-fun="things2"></router-view>
       </div>
     </div>
   </div>
@@ -54,14 +61,22 @@ export default {
         {id:3,text:'我的文章',path:'/mine/article'},
       ],
       active:null,
+      nav:{
+        first:'个人中心',
+        second:null,
+        third:null,
+        fourth:null
+      }
     }
   },
-  components:{
-  },
+  components:{},
   watch:{
     'updateUser':function(val){
       this.getUserInfo()  //编辑资料成功之后实时改变用户信息
     },
+    'nav':function (val) {
+      // console.log(val)
+    }
   },
   methods:{
     getUserInfo:function(){
@@ -74,19 +89,19 @@ export default {
           let data = res.object;
           vm.userName = data.nickName?data.nickName:data.userName;
           vm.headPortrait = data.headPortrait;
-          console.log( res.object)
+          sessionStorage.setItem('score',data.score)
           switch ( data.userLevel) {
             case 0:
               data.userLevel = '未认证'
               break
             case 1:
-              data.userLevel = '企业认证'
+              data.userLevel = '认证企业'
               break
             case 2:
-              data.userLevel = '作者认证'
+              data.userLevel = '认证作者'
               break
             case 3:
-              data.userLevel = '媒体认证'
+              data.userLevel = '认证媒体'
               break
           }
           if (data.authStatus===0){
@@ -119,6 +134,9 @@ export default {
     things:function (val) {
       this.updateUser = val;
     },
+    things2:function (val) {
+      this.nav=val
+    }
   },
   mounted(){
     this.$emit('is-footer', true)

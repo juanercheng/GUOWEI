@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div class="top-search">
       <div class="container ">
@@ -7,7 +8,7 @@
                     placeholder="请输入关键字搜索"
                     v-model="search"
                     @keyup.enter ="doSearch"
-                    class="search-inputs"/>
+                     class="search-inputs"/>
             <img src="../../../src/assets/images/searchBtn.png"
                  v-on:click="doSearch"
                  style="width: 90px;height: 48px;cursor: pointer"/>
@@ -17,16 +18,17 @@
     <div class="container">
      <div style="margin: 0 auto;width: 93.8%">
        <div class="search-title">含  "{{search}}"  的搜索结果{{dataList.length}} 条</div>
-       <div class="special-list" v-if="dataList">
+       <div class="special-list" v-if="dataList"
+            :style="dataList.length<=1?'min-height:380px':null">
          <div class="special-item cl" v-for="item in dataList" :key="item.id">
            <div class="home-content-left-box special-img fl">
-             <img :src="item.image" class="img"/>
+             <img :src="item.smallImage" class="img"/>
            </div>
            <div class="home-content-right-box special-right-box fl">
              <div>
                <div class="cl" style="overflow:hidden;margin-bottom: 21px">
-                 <img v-show="item.isNew" src="../../../src/assets/images/home/new.png" class="label-icon"/>
-                 <img v-show="item.isHotspot===1" src="../../../src/assets/images/home/hot.png" class="label-icon"/>
+                 <img v-show="item.tag===2" src="../../../src/assets/images/home/new.png" class="label-icon"/>
+                 <img v-show="item.tag===1" src="../../../src/assets/images/home/hot.png" class="label-icon"/>
                  <div><a  v-on:click="goDetails(item.id)"
                           style=" overflow: hidden;
                                text-overflow:ellipsis;
@@ -51,7 +53,7 @@
                    </div>
                  </div>
                </div>
-               <div class="rt"><img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes}}</div>
+               <div class="rt"><img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes||0}}</div>
              </div>
            </div>
          </div>

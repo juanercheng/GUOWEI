@@ -12,6 +12,7 @@ const api = {
     saveNews:'p/busnews/saveNews',
     authorNews:'p/busnews/author/info/',
     getMyNews:'p/user/getMyNews',
+    checkSmsCode:'p/checkSmsCode',
 },
   fileUpload:'fileUpload',
   home:{
@@ -29,12 +30,17 @@ const api = {
   },
   express:{
     busfastnews:'p/busfastnews/list',
+    weibo:'weibo/list',
     author:'p/busnews/author/info/',
-    getAuthorCol:'p/busnews/getAuthorCol'
+    getAuthorCol:'p/busnews/getAuthorCol',
+    updateLookTimes:'p/busadvertisement/updateLookTimes',
+    newsColumnAdvertisement:'p/busadvertisement/newsColumnAdvertisement'
   },
   cfg:{
     dictInfo:'cfg/dictInfo',
     clause:'cfg/clause',
+    strategicCooperation:'p/busadvertisement/strategicCooperation',
+    cooperationContent:'p/busadvertisement/cooperationContent',
   },
   about:{
     aboutUrl:'cfg/clause',

@@ -4,16 +4,18 @@
       {{label}}
     </div>
     <div class="container">
-      <div v-if="data" style="width: 95%;margin: 0 auto">
+      <div v-if="data"
+           :style="data.length<=1?'min-height:450px;padding-top:5%':null"
+           style="width: 95%;margin: 0 auto">
         <div class="special-item cl" v-for="item in data" :key="item.id">
           <div class="home-content-left-box special-img fl">
-            <img :src="item.image" class="img" v-on:click="goDetails(item.id)"/>
+            <img :src="item.smallImage" class="img" v-on:click="goDetails(item.id)"/>
           </div>
           <div class="home-content-right-box special-right-box fl">
             <div>
               <div class="cl" style="overflow:hidden;margin-bottom:2.4%">
-                <img v-show="item.isNew" src="../../../src/assets/images/home/new.png" class="label-icon"/>
-                <img v-show="item.isHotspot===1" src="../../../src/assets/images/home/hot.png" class="label-icon"/>
+                <img v-show="item.tag===2" src="../../../src/assets/images/home/new.png" class="label-icon"/>
+                <img v-show="item.tag===1" src="../../../src/assets/images/home/hot.png" class="label-icon"/>
                 <div><a  v-on:click="goDetails(item.id)"
                          v-model.trim="item.title"
                          style=" overflow: hidden;
@@ -28,7 +30,8 @@
             <div class="item-bottom cl">
               <div class="fl">
                 <div class="cl">
-                  <div class="fl item-bottom-left">{{item.authorName}}</div>
+                  <div class="fl item-bottom-left" style="cursor: pointer"
+                       v-on:click="columnSpecial(item.author)">{{item.authorName}}</div>
                   <div class="fl item-bottom-left">{{item.releaseDate}}</div>
                   <div class="fl item-bottom-left"
                        v-if="item.tag1||item.tag2||item.tag3">
@@ -39,7 +42,7 @@
                   </div>
                 </div>
               </div>
-              <div class="rt"><img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes}}</div>
+              <div class="rt"><img src="../../../src/assets/images/home/eye.png" class="icon"/>{{item.lookTimes||0}}</div>
             </div>
           </div>
         </div>

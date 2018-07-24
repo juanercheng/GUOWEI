@@ -1,6 +1,8 @@
 <template>
   <div class="text-left"  style="font-size: 16px;">
-    <div class="rule" v-html="data.content">
+    <div class="rule"
+         v-if="data"
+         v-html="data.content">
       {{data.content}}
     </div>
     <div class="text-center">

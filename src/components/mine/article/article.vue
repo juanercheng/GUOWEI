@@ -1,9 +1,5 @@
 <template>
 <div>
-  <el-breadcrumb separator-class="el-icon-arrow-right" style="top:3%">
-    <el-breadcrumb-item>个人中心</el-breadcrumb-item>
-    <el-breadcrumb-item><span style="margin:0 5px">></span>我的文章</el-breadcrumb-item>
-  </el-breadcrumb>
   <div class="user-con" style="padding-bottom: 28px">
     <div class="integral-list">
       <div class="flex-row justify-between cl  article-top">
@@ -40,7 +36,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="rt"><img src="../../../../src/assets/images/home/eye.png" class="icon"/>  {{item.lookTimes}}</div>
+                <div class="rt"><img src="../../../../src/assets/images/home/eye.png" class="icon"/>  {{item.lookTimes||0}}</div>
               </div>
           </div>
         </div>
@@ -155,7 +151,11 @@ export default {
   },
   mounted(){
     this.getList()
+    this.$emit('nav-fun', {first:'个人中心', second:'我的文章', third:null, fourth:null});
   },
+  beforeDestroy(){
+    this.$emit('nav-fun', {first:'个人中心', second:null, third:null, fourth:null});
+  }
 }
 </script>
 

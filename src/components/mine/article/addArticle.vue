@@ -1,10 +1,5 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right" style="top:2%">
-      <el-breadcrumb-item>个人中心</el-breadcrumb-item>
-      <el-breadcrumb-item><span style="margin:0 5px">></span>我的文章</el-breadcrumb-item>
-      <el-breadcrumb-item><span style="margin:0 5px">></span>发布文章</el-breadcrumb-item>
-    </el-breadcrumb>
     <div v-if="isSuccess">
       <v-success ref="Success"></v-success>
     </div>
@@ -26,7 +21,7 @@
             <td>
               <input placeholder="请输入标题"
                      class="add-input"
-                     required maxlength="50"
+                     maxlength="50"
                      v-model.trim="title" />
             </td>
           </tr>
@@ -76,7 +71,7 @@
           <tr class="add-item">
             <td class="lable-add">责任编辑</td>
             <input placeholder="请输入责任编辑"
-                   required maxlength="20"
+                   maxlength="20"
                    class="add-input"
                    v-model.trim="responsibleEditor"/>
           </tr>
@@ -255,6 +250,7 @@ export default {
         console.log(res)
         if(res.code===0){
           _this.isSuccess=true
+          _this.$emit('nav-fun', {first:'个人中心', second:'我的文章', third:null, fourth:null});
         }
       }, (res) => {
         console.log(res)
@@ -265,22 +261,17 @@ export default {
     const _this = this;
     //分类接口
     _this.newsTypeFun()
-
     _this.editor = UE.getEditor('editor', _this.config); // 初始化UE
     _this.editor.addListener("ready", function () {
       if(_this.mainText){
         _this.editor.setContent(_this.mainText); // 确保UE加载完成后，放入内容。
       }
     });
-
-    // var editor = new E('#editorElem')
-    // editor.customConfig.onchange = (html) => {
-    //   _this.mainText = html
-    // }
-    // editor.create()
+    _this.$emit('nav-fun', {first:'个人中心', second:'我的文章', third:'发布文章', fourth:null});
   },
   destroyed() {
     this.editor.destroy();
+    this.$emit('nav-fun', {first:'个人中心', second:null, third:null, fourth:null});
   }
 }
 </script>

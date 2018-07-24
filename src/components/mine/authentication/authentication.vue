@@ -1,11 +1,5 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item>个人中心</el-breadcrumb-item>
-      <el-breadcrumb-item ><span style="margin:0 5px">></span>申请认证</el-breadcrumb-item>
-      <el-breadcrumb-item v-show="isSuccess"><span style="margin:0 5px">></span>已提交</el-breadcrumb-item>
-      <!--<el-breadcrumb-item v-show="msg3"><span style="margin:0 5px">></span>{{msg3}}</el-breadcrumb-item>-->
-    </el-breadcrumb>
     <div v-if="isSuccess">
       <v-success ref="Success"></v-success>
     </div>
@@ -25,7 +19,8 @@
             </select>
             <div class="label rt">认证类型</div>
           </div>
-          <div class="item-title text-left" v-if="formData.certifiedType===1">个人信息</div>
+          <div class="item-title text-left"
+               v-if="formData.certifiedType===1">个人信息</div>
           <div class="certified-item cl">
             <input class="certified-item-h rt"
                    v-model.trim="formData.userName"
@@ -245,6 +240,7 @@ export default {
             _this.formData.enterpriseImage = data.enterpriseImage
             _this.formData.enterpriseName = data.enterpriseName
             _this.formData.enterpriseIdCard = data.enterpriseIdCard
+            _this.formData.certifiedType= data.userType
           }else {
             // _this.isCertified=false
             _this.$store.commit('SetAuthentication',false)
@@ -255,7 +251,7 @@ export default {
       })
     },
     changeType:function(e){
-      console.log(this.formData.certifiedType)
+      // console.log(this.formData.certifiedType)
     },
     upload:function(e){
       let _this= this
@@ -354,7 +350,7 @@ export default {
         });
         return
       }
-      if(_this.certifiedType===1){
+      if(_this.formData.certifiedType===1){
         if(!_this.formData.company){
           _this.$message.error({
             message: '请输入企业名称！',
@@ -407,12 +403,11 @@ export default {
         "userTel": _this.formData.mobile,
         "userType":_this.formData.certifiedType
       };
-      console.log(params)
       _this.PostJson(_this.authenticationUrl,params,function (res) {
-        console.log(res)
         if(res.code===0){
           _this.isSuccess=true
           _this.$store.commit('SetAuthentication',true)
+          _this.$emit('nav-fun', {first:'个人中心', second:'申请认证', third:'已提交', fourth:null});
         }
       }, (res) => {
         console.log(res)
@@ -421,9 +416,11 @@ export default {
   },
   mounted(){
     this.getAuthentication()
+    this.$emit('nav-fun', {first:'个人中心', second:'申请认证', third:null, fourth:null});
   },
   beforeDestroy(){
     this.$store.commit('SetAuthentication',false)
+    this.$emit('nav-fun', {first:'个人中心', second:null, third:null, fourth:null});
   }
   // beforeRouteLeave (to, from, next) {
   //   if(this.$store.state.isCertified===false){

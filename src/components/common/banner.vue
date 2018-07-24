@@ -6,9 +6,10 @@
         <el-carousel-item
           v-for="(item,index) in homeBanner"
           :key="index"
-
           :id="item.id">
-          <img :src='item.image' @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)" class="block-item-img img"/>
+          <img :src='item.image'
+               @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+               class="block-item-img img"/>
           <!--<div class="text-mask">{{item.title}}</div>-->
         </el-carousel-item>
       </el-carousel>
@@ -17,9 +18,11 @@
       <el-carousel  style="overflow: hidden" trigger="click">
         <el-carousel-item v-if="otherBanner"
           v-for="(item,index) in otherBanner"
-          :key="index" :jumpType="item.jumpType" :jumpUrl="item.jumpUrl"
+          :key="index"
           :id="item.id">
-          <img :src='item.image' class="block-item-img img"/>
+          <img :src='item.image'
+               @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+               class="block-item-img img"/>
           <div class="text-mask">{{item.title}}</div>
         </el-carousel-item>
       </el-carousel>
@@ -35,9 +38,7 @@ export default {
   data () {
     return {}
   },
-  mounted(){
-    console.log(this.otherBanner)
-  }
+  mounted(){}
 }
 </script>
 

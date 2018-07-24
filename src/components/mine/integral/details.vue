@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="item">
   <img :src="item.image" class="btc-img-details"/>
   <div style="font-size: 20px">{{item.currencyName}}</div>
   <div style="color: #f15929;font-size: 18px;margin-top: 15px"><img src="../../../assets/images/mine/integral.png"/> {{item.score}}</div>
@@ -70,7 +70,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this.item)
+    // console.log(this.item)
   }
 }
 </script>

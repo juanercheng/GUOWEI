@@ -3,19 +3,18 @@
     <div class="news text-left" v-if="busfastnews">
       <div class="news-title">7×24小时快讯</div>
       <div class="new-item" v-for="(item,index) in busfastnews"
-           v-if="index<=3"
+           v-if="index<=9"
            :id="item.id"
            :key="item.id">
         <div
-          style="line-height: 21px"
+          style="line-height: 21px;"
           class="news-item-title">{{item.title}}</div>
-        <div
-          style=" line-height: 18px"
+        <div style="line-height:18px"
           class="news-item-content">{{item.mainText}}</div>
         <div class="cl news-item-bottom">
           <div class="fl">{{item.releaseDate}}</div>
           <div class="rt"><img src="../../../src/assets/images/home/eye.png" class="icon"/>
-            {{item.lookTimes}}</div></div>
+            {{item.lookTimes||0}}</div></div>
       </div>
     </div>
     <div class="right-Ad-box relative home-news" v-if="rightAd1">
@@ -36,7 +35,8 @@
           <img :src="item.headImg"/>
         </div>
         <div class="fl">
-          <div class="author-title" >{{item.nickName}}</div>
+          <div class="author-title">
+            {{item.nickName}}</div>
           <div class="author-title-small">{{item.signature}}</div>
         </div>
       </div>
@@ -55,7 +55,7 @@
            v-on:click="columnSpecial(item.userId)"
            :id="item.id">
         <div class="new-item-bussiness fl"><img :src="item.headImg"/></div>
-        <div class="fl">
+        <div class="fl" style="width: 100%">
           <div class="author-title" >{{item.nickName}}</div>
           <div class="author-title-small">{{item.signature}}</div>
         </div>

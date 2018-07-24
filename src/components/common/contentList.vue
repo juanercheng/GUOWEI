@@ -3,7 +3,6 @@
     <div class="swiper-container tabs">
       <div class="swiper-wrapper" v-if="tabs">
         <div class="swiper-slide tab-li"
-             style="width: 162px!important;"
              v-if="tabs.length!==0"
              v-for="(item,index) in tabs "
              :key="item.remarks"
@@ -18,15 +17,15 @@
            :id="item.id" :key="index">
         <div
           class="cl homtContent-box"
-          :style="index===data.length-1?' border-bottom: none':' border-bottom: 1px solid #ddd;'">
+          :style="index===data.length-1?' border-bottom: none':' border-bottom: 1px solid #f6f6f6;'">
           <div class="home-content-left-box fl">
-            <img :src="item.image" class="img" v-on:click="goDetails(item.id)"/>
+            <img :src="item.smallImage" class="img" v-on:click="goDetails(item.id)"/>
           </div>
           <div class="home-content-right-box fl">
             <div>
-              <div class="cl" style="overflow:hidden;margin-bottom: 21px">
-                <img v-show="item.isNew" src="../../../src/assets/images/home/new.png" class="label-icon"/>
-                <img v-show="item.isHotspot===1" src="../../../src/assets/images/home/hot.png" class="label-icon"/>
+              <div class="cl" style="overflow:hidden;margin-bottom: 20px">
+                <img v-show="item.tag===2" src="../../../src/assets/images/home/new.png" class="label-icon"/>
+                <img v-show="item.tag===1" src="../../../src/assets/images/home/hot.png" class="label-icon"/>
                 <div>
                   <a  v-on:click="goDetails(item.id)"
                       style="
@@ -47,7 +46,8 @@
             <div class="item-bottom cl">
               <div class="fl">
                 <div class="cl">
-                  <div class="fl item-bottom-left">{{item.authorName}}</div>
+                  <div class="fl item-bottom-left" style="cursor: pointer"
+                       v-on:click="columnSpecial(item.author)">{{item.authorName}}</div>
                   <div class="fl item-bottom-left">{{item.releaseDate}}</div>
                   <div class="fl item-bottom-left"
                        v-if="item.tag1||item.tag2||item.tag3">
@@ -94,6 +94,7 @@ export default {
       moreMsg:'正在加载...',
       data:[],
     }
+
   },
   methods:{
     tabsClick:function (index,id) {
@@ -141,7 +142,6 @@ export default {
             data[i].releaseDate=_this.format(data[i].releaseDate)
             // data[i].mainText=_this.delHtmlTag(data[i].mainText)
           }
-          // console.log(data)
           let dataBlob = [];
           if(data.length>0){
             data.map(function (item) {
@@ -217,7 +217,7 @@ export default {
           console.log(res)
         })
       }
-    }
+    },
   },
   mounted () {
     if(this.$parent.type==='column'){

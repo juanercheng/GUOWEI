@@ -10,9 +10,11 @@
     transform scaleY(0.5)
 /*左右浮动*/
 .container{
-  margin 0 18.6%;
+  //margin 0 18.6%;
+  width 1200px;
+  margin 0 auto;
   position relative;
-  font-family: MicrosoftYaHeiUI;
+  //font-family: MicrosoftYaHeiUI;
   color #333
 }
 .el-message{
@@ -70,35 +72,31 @@ input::-ms-clear{display:none;}
   position: relative
 }
 @media screen and (max-width: 1680px) {
-  .container{
-    margin 0 16%;
-  }
   .el-col-5 {
     width: 22.83333%;
   }
-}
 
+}
 @media screen and (max-width: 1400px) {
-  .container{
-    margin 0 15%;
-  }
   .el-col-5 {
     width: 23%;
   }
 }
 @media screen and (max-width: 1280px) {
-  .container{
-    margin 0 13%;
-  }
   .el-col-5 {
     width: 24%;
   }
+  .container{
+    //margin 0 18.6%;
+    width 1080px;
+  }
 }
 @media screen and (max-width: 1204px) {
-  .container{
-    margin 0 11%;
-  }
   .el-col-5 {
     width: 29%;
+  }
+  .container{
+    //margin 0 18.6%;
+    width 850px;
   }
 }
