@@ -6,10 +6,10 @@ function getUrlPath() {
 // const domain=getUrlPath()+'guower/api/';
 // const imgPath = getUrlPath()+'guower/'
 
-// const domain = 'http://192.168.0.107:8981/guower/api/';
-// const imgPath = 'http://192.168.0.107:8981/guower/';
-const domain = 'http://chijun.xin/guower/api/'
-const imgPath = 'http://chijun.xin/guower'
+// const domain = 'http://192.168.0.104:8981/guower/api/';
+// const imgPath = 'http://192.168.0.104:8981/guower/';
+const domain = 'http://www.iguower.com/guower/api/'
+const imgPath = 'http://www.iguower.com/guower'
 
 export default
 {

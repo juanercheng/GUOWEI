@@ -1,46 +1,42 @@
 <template>
   <div class="footer" ref="footer">
     <div class="container " style="padding-bottom: 24px">
-      <el-row class="content">
-        <el-col :span="11">
-          <div class="grid-content bg-purple">
-            <el-row class="img-box" v-if="data1" >
-              <el-col :span="24"><div class="grid-content bg-purple"><div class="title">战略合作</div></div></el-col>
-              <el-col :span="4"  class="test1" v-for="item in data1" :key="item.id">
-                <div class="grid-content bg-purple">
-                  <img :src='item.image'
-                       @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
-                       style="width:102px;height: 27px">
-                </div>
-              </el-col>
-             </el-row>
+      <div class="content cl">
+        <div class="footer-con1 fl">
+          <el-col :span="24"><div class="grid-content bg-purple"><div class="title">战略合作</div></div></el-col>
+          <div class="img-box cl" v-if="data2" >
+            <div  v-for="item in data2"
+                  class="footer-con1-imgbox fl"
+                  :key="item.id">
+              <img :src='item.image'
+                   class="img"
+                   @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)">
+            </div>
           </div>
-        </el-col>
-        <el-col :span="13">
-          <div class="grid-content bg-purple-light">
-            <el-row class="img-box text-right" v-if="data2">
-              <el-col :span="24"><div class="grid-content bg-purple"><div class="title">合作内容</div></div></el-col>
-              <el-col :span="4"  class="test1" v-for="item in data2" :key="item.id">
-                <div class="grid-content bg-purple">
-                  <img :src='item.image'
-                       @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
-                       style="width: 86px;height: 27px">
-                </div>
-              </el-col>
-             </el-row>
-          </div>
-        </el-col>
-      </el-row>
-      <div class="line"></div>
-      <div class="bottom">
-        <div class="fl small item-left text-left">
-          copyright &copy; 果味财经 版权所有 沪ICP备17034336号-3
         </div>
-        <div class="text-right about item-right">
-          <router-link :to="{name:'about',params:{titleName:'aboutUs'}}" class="small"><span>关于我们</span></router-link>
-          <router-link :to="{name:'about',params:{titleName:'joinUs'}}" class="small"><span>加入我们</span></router-link>
-          <router-link :to="{name:'about',params:{titleName:'contactUs'}}" class="small"><span>联系我们</span></router-link>
-          <router-link :to="{name:'about',params:{titleName:'copyrightNotice'}}" class="small"><span style="border-right: none">版权申明</span></router-link>
+        <div class="footer-con2 fl">
+          <el-col :span="24"><div class="grid-content bg-purple"><div class="title">合作内容</div></div></el-col>
+          <div class="img-box cl" v-if="data1" >
+            <div  v-for="(item,index) in data1"
+                  class="footer-con2-imgbox fl"
+                  :key="item.id">
+              <img :src='item.image'
+                   class="img"
+                   @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="bottom cl">
+        <div class="fl small item-left text-left">
+          copyright &copy; 果味Pro 版权所有 京ICP备17013792号-2
+        </div>
+        <div class="rt text-right about item-right">
+          <router-link @click.native="scrolls" :to="{name:'about',params:{titleName:'aboutUs'}}" class="small"><span>关于我们</span></router-link>
+          <router-link @click.native="scrolls" :to="{name:'about',params:{titleName:'contactUs'}}" class="small"><span>联系我们</span></router-link>
+          <router-link @click.native="scrolls" :to="{name:'about',params:{titleName:'joinUs'}}" class="small"><span>加入我们</span></router-link>
+          <router-link @click.native="scrolls" :to="{name:'about',params:{titleName:'copyrightNotice'}}" class="small"><span style="border-right: none">版权声明</span></router-link>
         </div>
       </div>
       <div style="clear: both"></div>
@@ -77,6 +73,9 @@
             _this.data2=res.object
           }
         })
+      },
+      scrolls:function () {
+        window.scrollTo(0,0);
       }
     },
     mounted(){
@@ -89,8 +88,9 @@
   .footer{
     font-size: 20px;
     color: #ddd;
-    width: 100%;
+    /*width: 100%;*/
     background-color: #333333;
+    clear: both;
   }
   .test{
     margin-right:3%;
@@ -105,18 +105,29 @@
     color: #ddd;
     vertical-align: middle;
   }
+  .footer-con2 .img-box{
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+
+  }
   .img-box img{
-    margin-right: 32px;
-    margin-bottom: 21px;
+    /*margin-right: 32px;*/
+    /*margin-bottom: 21px;*/
     cursor: pointer;
     float: left;
+    opacity: 0.5;
+  }
+  .img-box img:hover{
+    opacity: 1;
   }
   .line{
     width: 100%;
     height: 1px;
     background-color: rgba(153, 153, 153,1);
     opacity: 0.17;
-    margin:5.3% 0 20px 0;
+    margin:33px 0 20px 0;
   }
   .bottom{
     line-height: 14px;
@@ -134,4 +145,56 @@
   .small span:hover{
     color: #fffefe;
   }
+  .footer-con1-img{
+    width: 108px;height: 38px;
+  }
+  /*.grid-content bg-purple img:hover{*/
+    /*opacity: 1;*/
+   /*}*/
+  .footer-con1{
+    width: 541px;
+    /*margin-right: 159px;*/
+  }
+  .footer-con2{
+    width: 659px;
+  }
+  .footer-con1-imgbox{
+    width: 98px;
+    height: 46px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    margin-right: 42px;
+  }
+  .footer-con2  .img-box>div:last-child{
+    margin:0;
+  }
+  /*.footer-con1-imgbox:nth-child(even){*/
+    /*margin:0 48px;*/
+  /*}*/
+  .footer-con2-imgbox{
+    width: 98px;
+    height: 46px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    margin-right: 42px;
+    float: left;
+  }
+  .container{
+    background-color: #333;
+  }
+  @media screen and (max-width: 500px) {
+    .footer-con1{
+      width :100%;
+    }
+    .footer-con2{
+      width: 100%;
+    }
+    .small{
+      text-align: center;
+    }
+    .about span{
+      padding: 0 5px;
+    }
+  }
+
 </style>

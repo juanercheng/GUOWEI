@@ -1,8 +1,15 @@
 .express-tabs{
   background-color: #fafbfc;
+  font-family:MicrosoftYaHeiUI;
+  font-size:20px;
+  font-weight:normal;
+  font-stretch:normal;
+  letter-spacing:0px;
+  /*color: #000000;*/
 }
 .express-tabs-li{
   width: 120px;
+  list-style: none;
 }
 .express1-item-bussiness{
   width: 120px;
@@ -23,9 +30,23 @@
   /*-webkit-box-orient: vertical;*/
   /*-webkit-line-clamp: 1;*/
   /*overflow: hidden;*/
+  color: #333;
+  font-stretch: normal;
   margin-bottom: 29px;
   margin-top: 30px;
+  font-weight: 600;
   cursor: pointer;
+  font-family: MicrosoftYaHeiUI;
+  font-size: 20px;
+  font-weight: 600;
+  font-stretch: normal;
+  letter-spacing: 0px;
+}
+.weibo-img{
+  width: 213px;
+  height: 150px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 }
 .con-item-con{
   font-size: 16px;
@@ -33,6 +54,7 @@
   line-height: 32px;
   letter-spacing: 0px;
   color: #888888;
+  margin-top: 30px;
   /*display: -webkit-box;*/
   /*-webkit-box-orient: vertical;*/
   /*-webkit-line-clamp:3;*/
@@ -50,10 +72,13 @@
 #share li,#share1 li{
   align-items: center;
   cursor: pointer;
+
 }
 #share img,#share1 img{
   margin: 5px;
   margin-right: 10px;
+  width: 30px;
+  height: 30px;
 }
 .author-title-small-express{
   font-size: 14px;
@@ -101,9 +126,10 @@
   left: 0;
   z-index: 9999;
 }
+/*.tab-li span:hover{*/
+  /*color: #333333;*/
+/*}*/
+/*tab-li express-tabs-li span:hover{*/
+  /*opacity: 1;*/
+/*}*/
 
-@media screen and (max-width: 428px) {
- .container{
-   width: 100%;
- }
-}

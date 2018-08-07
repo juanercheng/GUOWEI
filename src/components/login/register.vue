@@ -256,6 +256,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   @import "./login.css";
 </style>

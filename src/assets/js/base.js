@@ -3,9 +3,9 @@ function getUrlPath() {
   return window.location.protocol + '//' + window.location.host + '/' ;
 }
 // const domain=getUrlPath()+'guower/api/';
-//
-// const domain = 'http://192.168.0.107:8981/guower/api/';
-const domain = 'http://chijun.xin/guower/api/';
+
+// const domain = 'http://192.168.0.104:8981/guower/api/';
+const domain = 'http://www.iguower.com/guower/api/';
 
 exports.install = function (Vue, options) {
   Vue.prototype.formatDate = function (date, fmt) {
@@ -31,13 +31,22 @@ exports.install = function (Vue, options) {
     return ('00' + str).substr(str.length)
   }
   //文章跳转详情：
-  Vue.prototype.goDetails=function(id) {
-    this.$router.push({
+  // Vue.prototype.goDetails=function(id,type) {
+  //   this.$router.push({
+  //     path: './newsDetails',
+  //     query:{id:id,type:type}
+  //   })
+  //   window.open(goDetails.href, '_blank');
+  // },
+  Vue.prototype.goDetails=function(id,type) {
+    let routeData = this.$router.resolve({
       path: './newsDetails',
-      query:{id:id}
+      query: {id: id, type: type}
     })
+  window.open(routeData.href, '_blank');
   },
   Vue.prototype.columnSpecial =function(id) {
+    this.$store.commit('SetActiveTab',null)
     this.$router.push({
       path: './columnSpecial',
       query:{id:id}
@@ -45,22 +54,25 @@ exports.install = function (Vue, options) {
   },
   //广告/banner跳转：
   Vue.prototype.goNewUrl=function(jumpType,jumpUrl,id) {
-    console.log('jumpUrl',jumpUrl,jumpType)
-    if(jumpType===1){
-      window.open(jumpUrl, '_blank')
-    }else if(jumpType===2){
+    if(jumpType||jumpUrl){
+      if(jumpType===1){
+        window.open(jumpUrl, '_blank')
+      }else if(jumpType===2){
 
-    }else if(jumpType===3){
+      }else if(jumpType===3){
 
-    }else {
-      this.$router.push({
-        path: './newsDetails',
-        query:{id:id}
-      })
+      }else {
+        let routeData=this.$router.resolve({
+          path: './newsDetails',
+          query:{id:id}
+        })
+        window.open(routeData.href, '_blank');
+      }
     }
   },
   //跳转标签页
   Vue.prototype.goLabel=function(type,mine) {
+    this.$store.commit('SetActiveTab',null)
     if(mine){
       this.$router.push({
         path: '../labelList',

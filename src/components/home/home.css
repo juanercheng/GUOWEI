@@ -19,7 +19,7 @@
   right: 0px;
   bottom: 0px;
   background-color: rgba(0, 0, 0, 0.6);
-  line-height: 24px;
+  /*line-height: 24px;*/
 }
 .advertisement-text{
   color: #fff;
@@ -31,6 +31,7 @@
   font-size: 10px;
   background-color: rgba(0, 0, 0, 0.6);
 }
+
 .top-img-box:nth-child(even){
   margin:0 .6%;
 }
@@ -74,7 +75,7 @@
 }
 .tabs{
   clear: both;
-  width: 100%;
+  width: 95%;
   /*height: 60px;*/
   overflow: hidden;
   padding-left: 0;
@@ -82,6 +83,9 @@
 .swiper-container{
   background-color: #fafbfc;
   margin-bottom: 10px;
+}
+.next-btn{
+  width: 5%;
 }
 .tab-li{
   float: left;
@@ -98,10 +102,16 @@
   background-position: bottom;
 }
 .active span{
-  /*font-weight: bold;*/
+  font-weight: 600;
   color: #333;
 }
-
+.border-line{
+  border: 1px solid #ddd;
+}
+.border-line-1{
+  border: 1px solid #ddd;
+  width: 232px;
+}
 /*homtContent*/
 .homtContent-box{
   padding: 40px 0px 40px 0px;
@@ -149,6 +159,7 @@
   cursor: pointer;
   font-size: 20px;
   width: 85%;
+  font-weight: 600;
 
   /*margin-bottom: 18px;*/
   color: #333;
@@ -166,16 +177,25 @@
   overflow: hidden;
 }
 .item-bottom-left{
-  margin-right: 30px;
+  margin-right: 15px;
+  /*width: 125px;*/
+  /*overflow: hidden;*/
+  /*white-space: nowrap;*/
+  /*text-overflow: ellipsis;*/
 }
 .item-bottom-left span{
   cursor: pointer;
+  display: inline-block;
+  width: 70px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .new-title-line2{
-  display: -webkit-box;-webkit-box-orient: vertical;;-webkit-line-clamp: 2;overflow: hidden;width: 100%;height: 64%;
+  display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;width: 100%;height: 64%;
   font-family: MicrosoftYaHeiUI;
   font-size: 16px;
-  font-weight: normal;
+  font-weight: 600;
   font-stretch: normal;
   line-height: 24px;
   letter-spacing: 0px;
@@ -205,6 +225,9 @@
   background-color: #fafbfc;
   padding-bottom: 1px;
   padding-top: 30px;
+  /*max-height: 990px;*/
+  /*overflow-y: auto;*/
+  position: relative;
 }
 .news-title{
   font-size: 20px;
@@ -242,18 +265,32 @@
 .news-item-title-BOX{
   font-size: 18px;
   color: #333;
-  font-weight: normal;
   margin-bottom: 15px;
-  margin-top: 15px;
+  margin-top: 14px;
   line-height: 24px;
+  font-weight: 600;
+}
+.text-mask{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  color: #fff;
+  background-color: rgba(0,0,0,.4);
+  padding:12px 10px;
 }
 .news-item-content{
   font-weight: normal;
-  font-size: 12px;
-  line-height: 18px;
-  color: #666;
-  max-height: 216px;
-  overflow-y: auto;
+  font-size: 14px;
+  line-height: 21px;
+  color: #888;
+  /*max-height: 216px;*/
+  max-height: 230px;
+  letter-spacing: 0;
+  text-align: justify;
+  /*height: 50px;*/
+  /*overflow-y: auto;*/
 }
 .news-item-bottom{
   overflow: hidden;
@@ -321,7 +358,7 @@
   text-overflow:ellipsis;
   white-space: nowrap;
   width: 86%;
-  padding-bottom: 10px;
+  /*padding-bottom: 10px;*/
 }
 .author-title-1{
   font-size: 16px;
@@ -395,6 +432,10 @@
   margin: 30px 0;
   height: 214px;
 }
+.moble{
+  overflow:hidden;
+  margin-bottom: 20px
+}
 @media screen and (max-width: 1280px) {
   .el-col-5 {
     width: 24%;
@@ -442,15 +483,48 @@
   }
 }
 
-@media screen and (max-width: 428px) {
+@media screen and (max-width: 500px) {
   .content-left,.content-right{
     width: 100%;
     /*float: left;*/
   }
-  .footer{
-    display: none;
-  }
   .top-img-box, .top-img-box, .right-Ad-box {
-    height: 178px;
+    height: 135px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .center-advertisement-item-box {
+    height: 63px;
+  }
+  .center-advertisement-item-mask{
+    padding: 5px;
+  }
+  .top-img-box:nth-child(even){
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .homtContent-box{
+
+    flex-direction: column;
+    /* align-items: stretch; */
+  }
+  .home-content-right-box{
+    height: 100%;
+  }
+  .home-content-left-box{
+    height: 225px;
+    margin-bottom: 20px;
+  }
+  .home-content-left-box,.home-content-right-box{
+    width: 100%;
+  }
+  .item-bottom{
+    margin: 20px 0;
+  }
+  .item-bottom-left{
+   margin-right: 1px;
+  }
+  .new-title-line2{
+   line-height: 25px;
   }
 }

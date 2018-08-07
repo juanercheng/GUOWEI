@@ -9,11 +9,11 @@
           <div class="fl ">
             <div class="flex-row cl" style="justify-content: center;align-items: center">
               <img :src="item.currencyImg " class="btc-img fl"/>
-              <div class="integral-list-con-names fl">{{item.currencyName}}</div>
+              <div class="integral-list-con-names fl" style="integral-list-con-na">{{item.currencyName}}</div>
               <div class="integral-list-con-time fl">  {{item.createDate}}</div>
             </div>
           </div>
-          <div class="rt"><div style="font-size: 24px">- {{item.score||0 }}</div></div>
+          <div class="rt"><div style="font-size: 24px;line-height: 48px;font-weight: 600;">- {{item.score||0 }}</div></div>
         </div>
       </div>
     </div>

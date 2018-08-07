@@ -2,7 +2,7 @@
 <div class="container cl" style="overflow: hidden;margin-top: 21px">
   <div class="content-left">
     <v-banner ref="Banner"
-              :otherBanner="otherBanner"
+              :columnBanner="columnBanner"
               style="margin-bottom: 30px"></v-banner>
     <div class="content-home cl">
       <v-column-content ref="ColumnContent" ></v-column-content>
@@ -23,9 +23,9 @@ export default {
   data(){
     return{
       type:'column',  //专栏
-      Url: API.api.news.getNewsBanner,
+      Url: API.api.express.getNewsColumnBanner,
       active:0,
-      otherBanner:[],
+      columnBanner:[],
     }
   },
   components: {
@@ -41,9 +41,10 @@ export default {
         pageSize:30,
       };
       _this.getData(_this.Url,params,function (res) {
+        console.log(res)
         if (res.code === 0) {
           let data = res.object;
-          _this.otherBanner = data;
+          _this.columnBanner = data;
           _this.$emit('is-footer', true)
         }
       }, (res) => {

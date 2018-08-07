@@ -3,11 +3,16 @@
   <img :src="item.image" class="btc-img-details"/>
   <div style="font-size: 20px">{{item.currencyName}}</div>
   <div style="color: #f15929;font-size: 18px;margin-top: 15px"><img src="../../../assets/images/mine/integral.png"/> {{item.score}}</div>
-  <div>
+  <div style="position: relative">
     <input placeholder="请输入钱包地址"
            v-model.trim="address"
            maxlength="34"
            class="integral-address"/>
+    <div class="warning" v-show="isWarning">
+      <div class="warning-mine"
+           style="text-align: center;width: 100%;margin-top: 10px;position: absolute;bottom:-38px;font-size: 14px"
+           v-show="isWarning">请输入钱包地址！</div>
+    </div>
   </div>
   <div>
     <button
@@ -26,6 +31,7 @@ export default {
     return {
       Url:API.api.integral.exchangeRecord,
       address:null,
+      isWarning:false
     }
   },
   name: "details",
@@ -33,11 +39,12 @@ export default {
     send:function () {
       let _this = this
       if(!_this.address){
-        _this.$message({
-          message: '请输入钱包地址！',
-          center: true,
-          type:'warning',
-        });
+        // _this.$message({
+        //   message: '请输入钱包地址！',
+        //   center: true,
+        //   type:'warning',
+        // });
+        _this.isWarning=true
         return
       }
       let params = {
@@ -48,6 +55,7 @@ export default {
       _this.postData(_this.Url,params,function (res) {
         console.log(res)
         if (res.code === 0) {
+          _this.isWarning=false
           _this.$message({
             message: '提交成功',
             center: true,

@@ -45,11 +45,16 @@ export default {
 
 <style>
 #app {
-  font-family: MicrosoftYaHeiUI;
+  font-family: Microsoft Yahei UI;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   /*height: 91%;*/
 }
+/*@media screen and (max-width: 500px) {*/
+  /*#app{*/
+    /*overflow :auto*/
+  /*}*/
+/*}*/
 </style>

@@ -26,11 +26,10 @@
     <div class="special-list" v-if="dataList"
          :style="dataList.length===0?'min-height:90px':null">
       <div class="special-item cl"
-           v-for="item in dataList"
-           :id="item.id"
-           :key="item.id">
+           v-for="(item,index) in dataList"
+           :key="index">
         <div class="home-content-left-box special-img fl">
-          <img :src="item.image" class="img" v-on:click="goDetails(item.id)"/>
+          <img :src="item.smallImage" class="img" v-on:click="goDetails(item.id)"/>
         </div>
         <div class="home-content-right-box special-right-box fl">
           <div>
@@ -48,14 +47,14 @@
           <div class="item-bottom cl">
             <div class="fl">
               <div class="cl">
-                <div class="fl item-bottom-left">{{item.authorName}}</div>
+                <div class="fl item-bottom-left" style="width: 94px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;">{{item.authorName}}</div>
                 <div class="fl item-bottom-left">{{item.releaseDate}}</div>
                 <div class="fl item-bottom-left"
                      v-if="item.tag1||item.tag2||item.tag3">
                   <img class="icon" src="../../../src/assets/images/home/label.png"/>
-                  <span @click="goLabel(item.tag1)">{{item.tag1}}</span>
-                  <span @click="goLabel(item.tag2)">{{item.tag2}}</span>
-                  <span @click="goLabel(item.tag3)">{{item.tag3}}</span>
+                  <span @click="goLabel(item.tag1)" v-if="item.tag1">{{item.tag1}}</span>
+                  <span @click="goLabel(item.tag2)" v-if="item.tag2">{{item.tag2}}</span>
+                  <span @click="goLabel(item.tag3)" v-if="item.tag3">{{item.tag3}}</span>
                 </div>
               </div>
             </div>
@@ -121,12 +120,11 @@ export default {
       };
       // console.log(params)
       _this.postData(_this.newsUrl, params, function (res) {
-        console.log('res',res)
         if(res.code===0){
           let data = res.object;
+
           for(var i in data){
             data[i].releaseDate=_this.format(data[i].releaseDate)
-            // data[i].mainText=_this.delHtmlTag(data[i].mainText)
           }
           let dataBlob = [];
           if(data.length>0){
@@ -134,6 +132,7 @@ export default {
               dataBlob.push(item)
             });
           }
+          console.log(dataBlob);
           _this.moreMsg = '加载更多';
           if(_this.pageCurrent===1){
             _this.dataList=dataBlob;

@@ -1,12 +1,16 @@
 <template>
   <div class="container">
-    <div class="top-advertisement" v-if="topAdvertisement">
-      <div class="top-img-box" v-for="(item,index) in topAdvertisement"
+    <div class="top-advertisement">
+      <div class="top-img-box"
+           v-for="(item,index) in topAdvertisement"
+           :key="index"
            v-if="index<=4"
-           @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
-           :key="item.id">
-        <img :src='item.image' class="img"/>
-        <div class="advertisement-text">广告</div>
+           :class="!item?'border-line-1':null">
+        <img :src='item.image'
+             v-if="item"
+             @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+             class="img"/>
+        <div class="advertisement-text" >推广</div>
       </div>
       <div class="cl"></div>
     </div>
@@ -15,11 +19,11 @@
       <div class="center-advertisement" v-if="homeSmaillBanner">
         <div class="center-advertisement-item-box"
              v-for="(i,index) in homeSmaillBanner"
-             :id="i.id"
-             @click="goNewUrl(i.jumpType,i.jumpUrl,i.jumpNewsId)"
+             :class="!i?'border-line':null"
              v-if="index<=2"
              :key="index">
-          <img :src="i.image">
+          <img :src="i.image" @click="goNewUrl(i.jumpType,i.jumpUrl,i.jumpNewsId)"
+               class="img"/>
           <div class="center-advertisement-item-mask">{{i.title}}</div>
         </div>
       </div>
@@ -28,7 +32,7 @@
       </div>
     </div>
     <div class="content-right">
-      <v-right-content :busfastnews="busfastnews" :rightAd2="rightAd2" :rightAd3="rightAd3"
+      <v-right-content :rightAd2="rightAd2" :rightAd3="rightAd3"
                        :companyList="companyList" :rightAd1="rightAd1"
                        :authorList="authorList"></v-right-content>
     </div>
@@ -76,8 +80,18 @@ export default {
       _this.getData(_this.homeAdvertisementUrl,params,function (res) {
         if (res.code === 0) {
           let data = res.object;
-          _this.topAdvertisement=data.homeHead;
-          console.log('topAdvertisement',data.homeHead)
+          let len,arr=[]
+          if(data.homeHead.length<5){
+            len = 4 - data.homeHead.length
+            for (var i=0;i<=len;i++){
+              arr.push({
+                image:null,
+              })
+              _this.topAdvertisement=data.homeHead.concat(arr)
+            }
+          }else {
+            _this.topAdvertisement=data.homeHead;
+          }
           for (var i in data.homeRight){
             _this.rightAd1=data.homeRight[0]
             _this.rightAd2=data.homeRight[1]
@@ -89,25 +103,34 @@ export default {
       })
 
       //home APi
-      let params1={
-        // token:sessionStorage.getItem('token')
-      }
+      let params1={}
       _this.getData(_this.homeUrl,params1,function (res) {
         if (res.code === 0) {
           let data = res.object;
           let data1 = res.object.fastNews;
           let data2 = res.object.authorList;
           let data3 = res.object.companyList;
+          // console.log(data2);
           for(var i in data1){
             data1[i].releaseDate=_this.format(data1[i].releaseDate)
           }
-          console.log(res)
           _this.homeBanner=data.homeBanner;
           _this.busfastnews=data1;
           _this.authorList=data2;
           _this.companyList=data3;
-          _this.homeSmaillBanner = data.homeSmaillBanner
 
+          let len,arr=[]
+          if(data.homeSmaillBanner.length<3){
+            len =2 - data.homeSmaillBanner.length
+            for (var i=0;i<=len;i++){
+              arr.push({
+                image:null,
+              })
+              _this.homeSmaillBanner=data.homeSmaillBanner.concat(arr)
+            }
+          }else {
+            _this.homeSmaillBanner=data.homeSmaillBanner;
+          }
         }
       }, (res) => {
         console.log(res)

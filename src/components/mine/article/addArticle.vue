@@ -10,7 +10,7 @@
             <td class="lable-add">分类</td>
             <td>
               <select value="" v-model="newsType"
-                      class="add-input" style="width: 100%;padding-left: 14px">
+                      class="add-input textss" style="width: 100%;padding-left: 14px">
                 <option v-for="item in options"
                         :value="item.remarks">{{item.name}}</option>
               </select>
@@ -56,7 +56,7 @@
                  placeholder="请输入文章摘要"
                  v-model.trim="smallTitle"
                  class="add-textarea"
-                 maxlength="255"
+                 maxlength="100"
                  rows="4"></textarea>
             </td>
           </tr>
@@ -77,7 +77,9 @@
           </tr>
         </table>
         <div class="text-center" style="margin-top:5.2%">
-          <button class="btn btn-active" v-on:click="publish">发布</button>
+          <button class="btn btn-active"
+                  v-bind:disabled="ispublish"
+                  v-on:click="publish">发布</button>
         </div>
       </div>
     </div>
@@ -115,6 +117,7 @@ export default {
         initialFrameWidth: null,
         initialFrameHeight: 350
       },
+      ispublish:false
     }
   },
   components:{
@@ -236,7 +239,7 @@ export default {
         "releaseUserId": null,
         "responsibleEditor": _this.responsibleEditor,
         "smallImage": null,
-        "smallTitle": null,
+        "smallTitle": _this.smallTitle,
         "sort": null,
         "sortTime": null,
         "tag": null,
@@ -245,12 +248,19 @@ export default {
         "tag3": _this.tag3,
         "title": _this.title
       };
-      console.log(params)
+      _this.ispublish=true
       _this.PostJson(_this.saveNewsUrl,params,function (res) {
-        console.log(res)
         if(res.code===0){
           _this.isSuccess=true
+          _this.ispublish=false
           _this.$emit('nav-fun', {first:'个人中心', second:'我的文章', third:null, fourth:null});
+        }else {
+          _this.$message.error({
+            message:res.msg,
+            type:'warning',
+            center: true
+          });
+          _this.ispublish=false
         }
       }, (res) => {
         console.log(res)

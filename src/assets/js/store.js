@@ -11,7 +11,8 @@ export default new vuex.Store({
     isEdit:false, //个人信息编辑
     isCertified:false,//申请认证
     isSearch:false,//搜索
-    hasData:false
+    hasData:false,
+    activeTab:null
   },
   mutations:{
     setToken(state){
@@ -37,6 +38,9 @@ export default new vuex.Store({
     SetSearchData(d,state){
       this.state.hasData=state
     },
+    SetActiveTab(d,state){
+      this.state.activeTab=state
+    }
   },
 })
 

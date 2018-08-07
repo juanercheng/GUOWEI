@@ -30,11 +30,12 @@ const api = {
   },
   express:{
     busfastnews:'p/busfastnews/list',
-    weibo:'weibo/list',
+    weibo:'/weibo/homeTimeline',
     author:'p/busnews/author/info/',
     getAuthorCol:'p/busnews/getAuthorCol',
     updateLookTimes:'p/busadvertisement/updateLookTimes',
-    newsColumnAdvertisement:'p/busadvertisement/newsColumnAdvertisement'
+    newsColumnAdvertisement:'p/busadvertisement/newsColumnAdvertisement',
+    getNewsColumnBanner:'p/busadvertisement/getNewsColumnBanner'
   },
   cfg:{
     dictInfo:'cfg/dictInfo',

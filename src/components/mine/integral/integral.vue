@@ -1,12 +1,5 @@
 <template>
   <div>
-    <!--<el-breadcrumb separator-class="el-icon-arrow-right">-->
-      <!--<el-breadcrumb-item>个人中心</el-breadcrumb-item>-->
-      <!--<el-breadcrumb-item><span style="margin:0 5px">></span>积分兑换</el-breadcrumb-item>-->
-      <!--<el-breadcrumb-item v-show="active===0&&active!==1"><span style="margin:0 5px">></span>积分规则</el-breadcrumb-item>-->
-      <!--<el-breadcrumb-item v-show="active===1&&active!==0"><span style="margin:0 5px">></span>兑换记录</el-breadcrumb-item>-->
-      <!--<el-breadcrumb-item v-show="active===2"><span style="margin:0 5px">></span>兑换详情</el-breadcrumb-item>-->
-    <!--</el-breadcrumb>-->
     <div :class="!active&&active!==0&&active!==1?'bbg':null">
       <div class="integral-list">
         <div class="flex-row justify-between cl">
@@ -22,10 +15,10 @@
           </div>
         </div>
         <div style="margin: 17px 0 15px 0;font-size: 24px"
-             v-if="!active&&active!==0&&active!==1" >我的积分：{{score}}</div>
+             v-if="!active&&active!==0&&active!==1" >我的积分：{{score||0}}</div>
       </div>
     </div>
-    <div class="user-con">
+    <div class="user-con user-con-jifen">
       <v-rule v-if="active===0" v-on:child-msg="things"></v-rule>
       <v-history v-else-if="active===1" v-on:child-msg="things"></v-history>
       <v-details v-else-if="active===2" v-on:child-msg="things" :item="item"></v-details>

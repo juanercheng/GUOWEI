@@ -6,7 +6,7 @@
             v-for="(item,index) in getHotNews"
             :key="index"
             :id="item.id"
-            v-on:click="goDetails(item.id)"
+            v-on:click="goDetails(item.id,'expressNew')"
             class="flex-row cl eee">
         <div class="fl hotNews">
           <img class="img"
@@ -22,13 +22,16 @@
       </div>
     </div>
     <div class="more change" v-if="getHotNews.length>0" @click="change">换一换</div>
-    <div class="right-Ad-box  news-right-Ad relative"
-         v-for="(item,index) in rightAd"
-         v-if="index<=2"
-         @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
-         :key="index">
-      <img :src='item.image' class="img"/>
-      <div class="advertisement-text">广告</div>
+    <div  class="right-Ad-box  news-right-Ad relative"
+          v-for="(item,index) in rightAd"
+          :key="index"
+          v-if="index <= 2"
+          :class="!item?'border-line':null">
+      <img :src='item.image'
+           v-if="item"
+           @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+           class="img"/>
+      <div class="advertisement-text">推广</div>
     </div>
   </div>
 </template>
@@ -55,10 +58,20 @@ export default {
         pageSize:3,
       }
       _this.getData(_this.fastNewsAdvertisementUrl,params,function (res) {
-        // console.log(res)
         if (res.code === 0) {
           let data = res.object;
-          _this.rightAd = data
+          let len,arr=[]
+          if(data.length<3){
+            len = 2 - data.length
+            for (var i=0;i<=len;i++){
+              arr.push({
+                image:null,
+              })
+              _this.rightAd=data.concat(arr)
+            }
+          }else {
+            _this.rightAd=data;
+          }
         }
       }, (res) => {
         console.log(res)
@@ -129,6 +142,7 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     align-content: space-between;
+    cursor: pointer;
   }
   .realsdate{
     font-size: 14px;

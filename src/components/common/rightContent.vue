@@ -5,10 +5,10 @@
       <div class="new-item" v-for="(item,index) in guowerBox"
            :id="item.id"
            v-if="index<=0"
-           @click="BoxFun(item.jumpType,item.jumpUrl,item.id)"
+           @click="BoxFun(item.jumpType,item.jumpUrl,item.jumpNewsId,item.id)"
            :key="item.id">
         <img :src="item.image"
-             class="img guowei-img" />
+             class="img guowei-img" style="margin-bottom: 0"/>
         <div style=" overflow: hidden;
                      text-overflow:ellipsis;
                      white-space: nowrap;"
@@ -28,7 +28,7 @@
         <div class="news-title">作者排行</div>
         <div class="author-item cl" v-for="(item,index) in authorList"
              :key="item.id"
-             v-if="index<=2"  v-on:click="columnSpecial(item.userId)">
+             v-if="index<=9"  v-on:click="columnSpecial(item.userId)">
           <div class="fl author-sort" >{{index+1}}</div>
           <div class="new-item-author fl"><img :src="item.headImg"/></div>
           <div class="fl" style="width: 100%">
@@ -42,6 +42,9 @@
               <img src="../../../src/assets/images/home/eye.png"/> {{item.totalBrowse||0}}</div>
           </div>
         </div>
+        <div v-if="authorList.length===0" class="text-center" style="padding-bottom: 30px">
+          暂无排行
+        </div>
       </div>
       <div class="news text-left" style="margin-top: 16px" v-if="getHotNews">
         <div class="news-title">热门文章</div>
@@ -49,7 +52,7 @@
               v-for="(item,index) in getHotNews"
               :key="index"
               :id="item.id"
-              v-on:click="goDetails(item.id)"
+              v-on:click="goDetails(item.id,$parent.type)"
               class="flex-row cl eee">
           <div class="fl hotNews">
             <img class="img"
@@ -61,35 +64,38 @@
           </div>
         </div>
         <div v-if="getHotNews.length===0" class="text-center" style="padding-bottom: 30px">
-          暂无数据
+          暂无文章
         </div>
       </div>
     </div>
     <div v-if="$parent.type==='column' && getHotNews.length>0"
          @click="change"
          class="more change" style="margin: 10px 0">换一换</div>
-    <div class="news-right-Ad-last relative" v-if="rightVideo.length!==0">
+
+    <div class="news-right-Ad-last relative"
+         v-if="rightVideo"
+         :class="!rightVideo||!rightVideo.length?'border-line':null">
       <video v-if="videoType===1" class="img"  id="video" :src="rightVideo.jumpUrl">
         <source :src="rightVideo.jumpUrl" type="video/mp4">
       </video>
       <iframe v-else class="img"
               :src="rightVideo.jumpUrl"  ></iframe>
       <div class="video-title cl"  >
-        <div class="fl" style="margin-left: 11px">{{rightVideo.title}}</div>
-        <img class="rt" @click="play" v-if="!isPlay&&videoType===1"
-             src="../../../src/assets/images/bo.png"
-             style="width: 24px;height: 24px ;margin-right: 14px">
-        <img class="rt" @click="pausePlay" v-else  v-if="videoType===1"
-             src="../../../src/assets/images/stop.png"
-             style="width: 24px;height: 24px ;margin-right: 14px">
+        <div class="fl" style="width:83%;height:14px;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-left:12px;">{{rightVideo.title}}</div>
+        <img class="rt" @click="play"
+             :src="playImgUrl"
+             style=" width: 24px;height: 24px ;margin-right: 14px">
       </div>
     </div>
     <div class="right-Ad-box  news-right-Ad relative"
          :id="item.id" v-for="(item,index) in rightButton"
-         @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
-         v-if="rightButton||index<=2" >
-      <img :src='item.image' class="img"/>
-      <div class="advertisement-text">广告</div>
+         v-if="index <= 2"
+         :class="!item?'border-line':null">
+      <img :src='item.image'
+           v-if="item"
+           @click="goNewUrl(item.jumpType,item.jumpUrl,item.jumpNewsId)"
+           class="img"/>
+      <div class="advertisement-text">推广</div>
     </div>
   </div>
 </template>
@@ -113,7 +119,8 @@ export default {
       getHotNews:[],
       pageCurrent:1,
       all:false,
-      isPlay:false
+      playStatus:true,
+      playImgUrl:require('../../../src/assets/images/bo.png'),
     }
   },
   methods:{
@@ -126,7 +133,20 @@ export default {
         if (res.code === 0) {
           let data = res.object;
           let rightVideo = data.rightVideo;
-          _this.rightButton = data.rightButton;
+          let len,arr=[]
+          if(data.rightButton.length<5){
+            len = 4 - data.rightButton.length
+            for (var i=0;i<=len;i++){
+              arr.push({
+                image:null,
+              })
+              _this.rightButton=data.rightButton.concat(arr)
+            }
+          }else {
+            _this.rightButton=data.rightButton;
+          }
+          // console.log(_this.rightVideo)
+          // console.log(_this.rightVideo.length)
           for (var i in data.guowerBox){
             data.guowerBox[i].releaseDate=_this.format(data.guowerBox[i].releaseDate)  //修改时间格式
           }
@@ -149,26 +169,12 @@ export default {
       //作者排行
       let params1={
         pageCurrent:1,
-        pageSize:3
+        pageSize:10
       }
       _this.getData(_this.getAuthorColUrl,params1,function (res) {
         if (res.code === 0) {
           let data2 = res.object;
           _this.authorList=data2;
-
-
-          // switch ( _this.authorList.userLevel) {
-          //   case 1:
-          //     _this.authorList.userLevel = '认证企业'
-          //     break
-          //   case 2:
-          //     _this.authorList.userLevel = '认证作者'
-          //     break
-          //   case 3:
-          //     _this.authorList.userLevel = '认证媒体'
-          //     break
-          // }
-          // debugger
         }
       }, (res) => {
         console.log(res)
@@ -213,34 +219,41 @@ export default {
         this.getList()
       }
     },
-    play:function () {
-      this.isPlay=true
-      document.getElementById('video').play()
-    },
-    pausePlay:function () {
-      this.isPlay=false
-      document.getElementById('video').pause();
-    },
-    BoxFun:function (jumpType,jumpUrl,id) {
+    //播放暂停的方法：
+    play:function (){
+      if(this.playStatus){
+        //播放
+        this.playImgUrl=require('../../../src/assets/images/stop.png');
+        document.getElementById('video').play()
+        this.playStatus=false;
+      }else{
+        //暂停
+        document.getElementById('video').pause();
+        this.playImgUrl=require('../../../src/assets/images/bo.png');
+        this.playStatus=true;
+      }
+},
+    BoxFun:function (jumpType,jumpUrl,jumpId,id) {
       let _this = this
       let params = {
         id:id
       }
-      let newTab=window.open(jumpUrl);
+      let newTab
+      if(jumpType===1){
+        newTab=window.open(jumpUrl);
+      }
       _this.getData(_this.updateLookTimesUrl,params,function (res) {
-        if (res.code === 0) {
-          if(jumpType===1){
-            newTab.location.href=jumpUrl;
-          }else if(jumpType===2){
+        if(jumpType===1){
+          newTab.location.href=jumpUrl;
+        }else if(jumpType===2){
 
-          }else if(jumpType===3){
+        }else if(jumpType===3){
 
-          }else {
-            _this.$router.push({
-              path: './newsDetails',
-              query:{id:id}
-            })
-          }
+        }else {
+          _this.$router.push({
+            path: './newsDetails',
+            query:{id:jumpId,type:_this.$parent.type}
+          })
         }
       })
 
@@ -256,6 +269,7 @@ export default {
     this.getList()
   },
 }
+
 </script>
 <style scoped>
   .eee{

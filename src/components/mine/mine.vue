@@ -1,6 +1,6 @@
 <template>
 <div class="content-mine">
-  <div class="container">
+  <div class="container" style="background-color: #f8f7f7;">
     <div>
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item><span v-on:click="$store.commit('SetSaveData',false)">{{nav.first}}</span></el-breadcrumb-item>
@@ -16,8 +16,8 @@
                class="user-img"/>
           <div class="user-name">{{userName}}</div>
           <span v-if="userLevel"
-                class="mineAuthentication"
-                style="margin: 0 auto">{{userLevel}}</span>
+                :class="userLevel==='认证作者'?'mineAuthentication1':userLevel==='认证企业'?'mineAuthentication2':userLevel==='认证媒体'?'mineAuthentication3':'mineAuthentication4'"
+                style="margin: 0 auto" >{{userLevel}}</span>
         </div>
         <div class="left-menu" v-if="menu">
             <ul>

@@ -14,9 +14,11 @@
             <select value="" v-model="formData.certifiedType"
                     class="certified-item-h rt select"
                     @change='changeType'
+                    :style="!formData.certifiedType?'color:#999':'color:#333'"
                     name="certifiedType" >
               <option v-for="item in certifiedTypes" :value="item.id">{{item.text}}</option>
             </select>
+            <span class="hint certified-hint" v-show="formDataHint.certifiedHint">{{formDataHint.certifiedHintHtml}}</span>
             <div class="label rt">认证类型</div>
           </div>
           <div class="item-title text-left"
@@ -26,6 +28,7 @@
                    v-model.trim="formData.userName"
                    maxlength="20"
                    placeholder="请输入姓名" />
+            <span class="hint name-hint" v-show="formDataHint.nameHint">{{formDataHint.nameHintHtml}}</span>
             <div class="label rt">姓名</div>
           </div>
           <div class="certified-item cl">
@@ -33,6 +36,7 @@
                    v-model.trim="formData.idCard"
                    maxlength="18"
                    placeholder="请输入身份证号" />
+            <span class="hint card-hint" v-show="formDataHint.cardHint">{{formDataHint.cardHintHtml}}</span>
             <div class="label rt">身份证号</div>
           </div>
           <div class="certified-item cl">
@@ -41,6 +45,7 @@
                    maxlength="11"
                    type="tel"
                    placeholder="请输入手机号码" />
+            <span class="hint tel-hint" v-show="formDataHint.telHint">{{formDataHint.telHintHtml}}</span>
             <div class="label rt">手机号码</div>
           </div>
           <div class="certified-item cl">
@@ -49,6 +54,7 @@
                    maxlength="20"
                    type="email"
                    placeholder="请输入邮箱" />
+            <span class="hint email-hint" v-show="formDataHint.emailHint">{{formDataHint.emailHintHtml}}</span>
             <div class="label rt">邮箱</div>
           </div>
           <div class="certified-item cl" style="position: relative">
@@ -58,6 +64,7 @@
               <input type="file" @change="upload" id="personImg"
                      style="position: absolute;left: 12%;height:80%;width: 25%;opacity: 0"/>
             </div>
+            <span class="hint papers-hint" v-show="formDataHint.papersHint">{{formDataHint.papersHintHtml}}</span>
             <div class="label rt">证件照</div>
           </div>
           <!--企业信息-->
@@ -68,6 +75,7 @@
                      v-model.trim="formData.company"
                      maxlength="20"
                      placeholder="请输入企业名称" />
+              <span class="hint company-hint" v-show="formDataHint.companyHint">{{formDataHint.companyHintHtml}}</span>
               <div class="label rt">企业名称</div>
             </div>
             <div class="certified-item cl">
@@ -75,6 +83,7 @@
                      v-model.trim="formData.companyId"
                      maxlength="30"
                      placeholder="请输入企业证证件号" />
+              <span class="hint company-papers-hint" v-show="formDataHint.companyPapersHint">{{formDataHint.companyPapersHintHtml}}</span>
               <div class="label rt">企业证件号</div>
             </div>
             <div class="certified-item cl" style="position: relative">
@@ -84,6 +93,7 @@
                 <input type="file" @change="upload" id="businessImg"
                        style="position: absolute;left: 12%;height:80%;width: 25%;opacity: 0"/>
               </div>
+              <span class="hint business-license-hint" v-show="formDataHint.businessLicenseHint">{{formDataHint.businessLicenseHintHtml}}</span>
               <div class="label rt">营业执照</div>
             </div>
           </div>
@@ -164,14 +174,35 @@ export default {
       fileUploadUrl:this.GLOBAL.domain+ API.api.fileUpload,
       isSuccess:null,
       type:'authenticationMine',
+      formDataHint:{
+        certifiedHint:false,
+        nameHint:false,
+        cardHint:false,
+        telHint:false,
+        emailHint:false,
+        papersHint:false,
+        companyHint:false,
+        companyPapersHint:false,
+        businessLicenseHint:false,
+        certifiedHintHtml:'',
+        nameHintHtml:'',
+        cardHintHtml:'',
+        telHintHtml:'',
+        emailHintHtml:'',
+        papersHintHtml:'',
+        companyHintHtml:'',
+        companyPapersHintHtml:'',
+        businessLicenseHintHtml:'',
+      },
       certifiedTypes:[
+        {id:'',text:'请选择认证类型'},
         {id:2,text:'作者认证'},
         {id:1,text:'企业认证'},
         {id:3,text:'媒体认证'}
       ],
       userType:null,
       formData:{
-        certifiedType:2,
+        certifiedType:'',
         userName:null,
         mobile:null,
         idCard:null,
@@ -194,30 +225,42 @@ export default {
    'v-success':Success
   },
   methods:{
+    verificationResult:function(parentEle){
+      let _this=this;
+      _this.formDataHint.nameHint=false;
+      _this.formDataHint.cardHint=false;
+      _this.formDataHint.telHint=false;
+      _this.formDataHint.emailHint=false;
+      _this.formDataHint.papersHint=false;
+      _this.formDataHint.companyHint=false;
+      _this.formDataHint.companyPapersHint=false;
+      _this.formDataHint.businessLicenseHint=false;
+      _this.formDataHint[parentEle]=true;
+    },
     getAuthentication:function(){
-      let _this = this
+      let _this = this;
       let params={
         token:sessionStorage.getItem('token')
       };
       _this.getData(_this.getAuthenticationUrl,params,function (res) {
         if (res.code === 0) {
-          _this.loading = false
+          _this.loading = false;
           if(res.object){
-            let data = res.object
+            let data = res.object;
             // _this.isCertified=true
-            _this.$store.commit('SetAuthentication',true)
-            _this.status.id=data.result
+            _this.$store.commit('SetAuthentication',true);
+            _this.status.id=data.result;
             switch (data.result) {
               case 0:
-                _this.status.info='认证中，请耐心等待审核'
-                _this.status.smallInfo = ''
+                _this.status.info='认证中，请耐心等待审核';
+                _this.status.smallInfo = '';
                 break
               case 1:
                 _this.status.info='审核通过，认证成功！'
                 _this.status.smallInfo = ''
                 break
               case 2:
-                _this.status.info='审核未通过，请重新审核！'
+                _this.status.info='审核未通过，请重新申请！'
                 _this.status.smallInfo = data.remarks?data.remarks:'未通过'
                 break
             }
@@ -295,92 +338,72 @@ export default {
     send:function () {
       let _this = this;
       let reg = /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-      let reg1 = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      let reg1 =  /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|[xX])$/;
       let reg2 = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
+      if (!_this.formData.certifiedType){
+        _this.verificationResult('certifiedHint');
+        _this.formDataHint.certifiedHintHtml='请选择认证类型！';
+        return
+      }
       if(!_this.formData.userName){
-        _this.$message.error({
-          message: '请输入姓名！',
-          type:'warning',
-          center: true
-        });
+        _this.verificationResult('nameHint');
+        _this.formDataHint.nameHintHtml='请输入姓名！';
         return
       }
       if(!_this.formData.idCard){
-        _this.$message.error({
-          message: '请输入身份证号！',
-          type:'warning',
-          center: true
-        });
+        _this.verificationResult('cardHint');
+        _this.formDataHint.cardHintHtml='请输入身份证号！';
         return
       }
       if (!reg1.test(_this.formData.idCard)) {
-        _this.$message.error({
-          message: '请输入身份证号!',
-          center: true
-        })
+        _this.verificationResult('cardHint');
+        _this.formDataHint.cardHintHtml='请输入正确的身份证号！';
         return
       }
       if(!_this.formData.mobile){
-        _this.$message.error({
-          message: '请输入手机号码！',
-          type:'warning',
-          center: true
-        });
+        _this.verificationResult('telHint');
+        _this.formDataHint.telHintHtml='请输入手机号码！';
         return
       }
       if (!reg.test(_this.formData.mobile)) {
-        _this.$message.error({
-          message: '请输入正确的手机号码!',
-          center: true
-        })
+        _this.verificationResult('telHint');
+        _this.formDataHint.telHintHtml='请输入正确的手机号码！';
+        return
+      }
+      if (!_this.formData.email) {
+        _this.verificationResult('emailHint');
+        _this.formDataHint.emailHintHtml='请输入邮箱！';
         return
       }
       if (!reg2.test(_this.formData.email)) {
-        _this.$message.error({
-          message: '请输入正确的邮箱!',
-          center: true
-        })
+        _this.verificationResult('emailHint');
+        _this.formDataHint.emailHintHtml='请输入正确的邮箱！';
         return
       }
       if(!_this.formData.personImg){
-        _this.$message.error({
-          message: '请上传个人证件照！',
-          type:'warning',
-          center: true
-        });
+        _this.verificationResult('papersHint');
+        _this.formDataHint.papersHintHtml='请上传个人证件照！';
         return
       }
       if(_this.formData.certifiedType===1){
         if(!_this.formData.company){
-          _this.$message.error({
-            message: '请输入企业名称！',
-            type:'warning',
-            center: true
-          });
+          _this.verificationResult('companyHint');
+          _this.formDataHint.companyHintHtml='请输入企业名称！';
           return
         }
         if(!_this.formData.companyId){
-          _this.$message.error({
-            message: '请输入企业证件号！',
-            type:'warning',
-            center: true
-          });
+          _this.verificationResult('companyPapersHint');
+          _this.formDataHint.companyPapersHintHtml='请输入企业证件号！';
           return
         }
         if(!_this.formData.companyId){
-          _this.$message.error({
-            message: '请输入企业证件号！',
-            type:'warning',
-            center: true
-          });
+          _this.verificationResult('companyPapersHint');
+          _this.formDataHint.companyPapersHintHtml='请输入正确的企业证件号！';
           return
         }
         if(!_this.formData.companyImg){
-          _this.$message.error({
-            message: '请上传企业证件照！',
-            type:'warning',
-            center: true
-          });
+          _this.verificationResult('businessLicenseHint');
+          _this.formDataHint.businessLicenseHintHtml='请上传企业证件照';
           return
         }
       }
@@ -441,4 +464,17 @@ export default {
 
 <style>
   @import "../mine.css";
+  .certified-item{
+    position:relative;
+  }
+  .hint{
+    position: absolute;
+    top: 74%;
+    color: #ff2222;
+    font-size: 14px;
+    left: 15%;
+  }
+  .papers-hint,.business-license-hint{
+    top:85%;
+  }
 </style>

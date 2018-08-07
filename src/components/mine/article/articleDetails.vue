@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-con text-left" v-if  ="data">
-      <div style="font-size: 26px;color: #2f2f2f;line-height: 39px;">{{data.title}}</div>
+      <div style="font-size: 26px;color: #2f2f2f;line-height: 39px;font-weight: 600;">{{data.title}}</div>
       <div style="font-size: 14px;margin-top: 30px">
         <div class="article-item-bottom cl">
           <div class="fl">
@@ -10,14 +10,17 @@
               <div class="fl article-item-bottom-left">
                 <img class="icon"
                      v-if="data.tag1||data.tag2||data.tag3"
-                     src="../../../../src/assets/images/home/label.png" /> {{data.tag1}} {{data.tag2}} {{data.tag3}}</div>
+                     src="../../../../src/assets/images/home/label.png" />
+                <span @click="goLabel(data.tag1,1)">{{data.tag1}}</span>
+                <span @click="goLabel(data.tag2,1)">{{data.tag2}}</span>
+                <span @click="goLabel(data.tag3,1)">{{data.tag3}}</span>
+              </div>
             </div>
           </div>
           <div class="fl"><img src="../../../../src/assets/images/home/eye.png" class="icon"/>  {{data.lookTimes||0}}</div>
         </div>
       </div>
       <div style="margin-top: 60px;font-size: 18px;line-height: 36px;	color: #5b5b5b;overflow-x: hidden">
-        <img :src="data.image" class="img">
         <div v-html="data.mainText">
           {{data.mainText}}
         </div>

@@ -74,7 +74,7 @@ export default {
         //   message: '请输入手机号码',
         //   center: true
         // })
-        vm.warning='请输入手机号码！',
+        vm.warning='请输入手机号码！'
         vm.isWarning=true;
         return
       }
@@ -83,7 +83,7 @@ export default {
         //   message: '请输入正确的手机号码',
         //   center: true
         // })
-        vm.warning='请输入正确的手机号码！',
+        vm.warning='请输入正确的手机号码！'
         vm.isWarning=true;
         return
       }
@@ -92,7 +92,7 @@ export default {
         //   message: '请输入密码',
         //   center: true
         // })
-        vm.warning='请输入密码！',
+        vm.warning='请输入密码！'
         vm.isWarning=true;
         return
       }
@@ -101,7 +101,7 @@ export default {
         //   message: '请输入长度为6到10位的密码',
         //   center: true
         // })
-        vm.warning='请输入长度为6到10位的密码！',
+        vm.warning='请输入长度为6到10位的密码！'
         vm.isWarning=true;
         return
       }

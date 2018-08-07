@@ -7,7 +7,7 @@
       <div v-if="data"
            :style="data.length<=1?'min-height:450px;padding-top:5%':null"
            style="width: 95%;margin: 0 auto">
-        <div class="special-item cl" v-for="item in data" :key="item.id">
+        <div class="special-item cl" v-for="(item,index) in data" :key="index">
           <div class="home-content-left-box special-img fl">
             <img :src="item.smallImage" class="img" v-on:click="goDetails(item.id)"/>
           </div>

@@ -20,7 +20,7 @@
        <div class="search-title">含  "{{search}}"  的搜索结果{{dataList.length}} 条</div>
        <div class="special-list" v-if="dataList"
             :style="dataList.length<=1?'min-height:380px':null">
-         <div class="special-item cl" v-for="item in dataList" :key="item.id">
+         <div class="special-item cl" v-for="(item,index) in dataList" :key="index">
            <div class="home-content-left-box special-img fl">
              <img :src="item.smallImage" class="img"/>
            </div>
@@ -117,8 +117,6 @@ export default {
             _this.pageCurrent=_this.pageCurrent>=2?_this.pageCurrent--:_this.pageCurrent;
             _this.more=false;
           }
-
-          console.log(_this.dataList);
         }else {
           _this.$alert(res.msg,'错误编码：'+res.code,()=>{
             return true;

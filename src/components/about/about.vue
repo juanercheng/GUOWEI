@@ -3,16 +3,24 @@
     <div class="aboutHeadImg" style="width: 100%;" ref="aboutHeadImg">
       <img src="../../../src/assets/images/About/bj.png" alt="" style="width:100%;height:310px;">
     </div>
-    <el-tabs id="aboutTab" v-model="activeName" type="card" @tab-click="tabChange">
-      <el-tab-pane
-        :key="item.name"
-        v-for="(item,index) in editableTabs"
-        :label="item.label"
-        :name="item.name"
-      >
-        <div class="el-tab-content" ref="elTabContent" v-html="item.content" style="font-family: MicrosoftYaHeiUI;	font-size: 18px;	font-weight: normal;font-stretch: normal;line-height: 36px;letter-spacing: 0px;	color: #333333;">{{item.content}}</div>
-      </el-tab-pane>
-    </el-tabs>
+    <div class="container">
+      <el-tabs id="aboutTab"
+               v-if="editableTabs"
+               v-model="activeName" type="card" @tab-click="tabChange">
+        <el-tab-pane
+          :key="item.name"
+          v-for="(item,index) in editableTabs"
+          :label="item.label"
+          :name="item.name"
+        >
+          <div class="el-tab-content"
+               ref="elTabContent"
+               v-html="item.content"
+               style="line-height: 36px;">{{item.content}}</div>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
   </div>
 </template>
 <script>
@@ -25,9 +33,9 @@
         changeName:sessionStorage.getItem('changeName')?sessionStorage.getItem('changeName'):'',
         // tabPosition:top,
         editableTabs:[{id:0,label:'关于我们',name:'aboutUs',content:''},
-          {id:1,label:'加入我们',name:'joinUs',content:''},
-          {id:2,label:'联系我们',name:'contactUs',content:''},
-          {id:3,label:'版权申明',name:'copyrightNotice',content:''}],
+          {id:1,label:'联系我们',name:'contactUs',content:''},
+          {id:2,label:'加入我们',name:'joinUs',content:''},
+          {id:3,label:'版权声明',name:'copyrightNotice',content:''}],
         parms:{
           aboutUs:'CLAUSE_ABOUT',
           joinUs:'JOIN_ME',
@@ -56,7 +64,8 @@
         } )
       },
       tabChange:function(val){
-        if(val.name===this.changeName)return true;
+        // if(val.name===this.changeName)return true;
+        // debugger
         sessionStorage.setItem('changeName',val.name);
         this.getDataFn(val.name);
       },

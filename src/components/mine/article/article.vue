@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="user-con" style="padding-bottom: 28px">
+  <div class="user-con user-con-jifen" style="padding-bottom: 28px">
     <div class="integral-list">
       <div class="flex-row justify-between cl  article-top">
         <div class="fl integral-list-title" >
@@ -15,11 +15,12 @@
         <div class="article-item cl"
              v-for="item in data"
              :id="item.id"
-             :key="item.id"
-             @click="goMineDetails(item.id)">
-          <div class="fl article-item-img"><img :src="item.image" class="img"/></div>
+             :key="item.id">
+          <div class="fl article-item-img"
+               @click="goMineDetails(item.id)"><img :src="item.image" class="img"/></div>
           <div class="fl article-con-right-box" >
               <div class="article-item-title"
+                   @click="goMineDetails(item.id)"
                  style=" overflow: hidden;  text-overflow:ellipsis; white-space: nowrap;">{{item.title}}</div>
               <div class="article-item-content"
                  style=" overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"
@@ -128,20 +129,47 @@ export default {
     publish:function () {
       let _this = this
       if(sessionStorage.getItem('userLevel')==='未认证'){
-        _this.$message({
-          message: '你还没有认证，请先认证！',
-          center: true
+        _this.$confirm('你还没有认证，请先认证！', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText:'取消',
+          showClose:false,
+          closeOnClickModal:false,
+          confirmButtonClass:'btn-confirm',
+          cancelButtonClass:'btn-cancel'
         })
+          .then(() => {
+            _this.$router.push({
+              path:'./authentication'
+            })
+          })
+          .catch(action => {
+            console.log('cancel')
+          })
       }else if(sessionStorage.getItem('userLevel')==='认证中'){
-        _this.$message({
-          message: '认证中，请耐心等待通过审核之后再发布文章！',
-          center: true
-        })
+        _this.$alert('认证中，请耐心等待通过审核之后再发布文章！', '温馨提示', {
+          confirmButtonText: '确定',
+          confirmButtonClass:'btn-confirm',
+          callback: action => {
+            console.log('ok')
+          }
+        });
       }else if(sessionStorage.getItem('userLevel')==='未通过'){
-        _this.$message({
-          message: '您的认证没有通过，请重新认证！',
-          center: true
+        _this.$confirm('您的认证没有通过，请重新认证！', '温馨提示', {
+          confirmButtonText: '确定',
+          cancelButtonText:'取消',
+          showClose:false,
+          closeOnClickModal:false,
+          confirmButtonClass:'btn-confirm',
+          cancelButtonClass:'btn-cancel'
         })
+          .then(() => {
+            _this.$router.push({
+              path:'./authentication'
+            })
+          })
+          .catch(action => {
+            console.log('cancel')
+          })
       }else {
         _this.$router.push({
           path: '/mine/addArticle',

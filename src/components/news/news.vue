@@ -2,7 +2,7 @@
 <div class="container cl" style="overflow: hidden;margin-top: 21px">
   <div class="content-left">
     <v-banner ref="Banner"
-              :otherBanner="otherBanner"
+              :newsBanner="newsBanner"
               style="margin-bottom: 30px"></v-banner>
     <div class="content-home cl">
       <v-news-content ref="newsContent"></v-news-content>
@@ -27,7 +27,8 @@ export default {
       active:0,
       tabs:[],
       Url: API.api.news.getNewsBanner,
-      otherBanner:[]
+      newsBanner:[]
+
     }
   },
   components: {
@@ -38,6 +39,7 @@ export default {
   methods:{
     getTabs:function () {
       let _this = this;
+      // console.log(_this);
       let params={
         pageCurrent:1,
         pageSize:30,
@@ -45,7 +47,8 @@ export default {
       _this.getData(_this.Url,params,function (res) {
         if (res.code === 0) {
           let data = res.object;
-          _this.otherBanner = data
+          console.log(data);
+          _this.newsBanner = data
           _this.$emit('is-footer', true)
         }
       }, (res) => {

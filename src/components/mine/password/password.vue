@@ -100,19 +100,11 @@ export default {
       let _this = this
       let reg = /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
       if(!_this.formData.mobile){
-        // _this.$message.error({
-        //   message: '请输入手机号码',
-        //   center: true
-        // })
         _this.warning= '请输入手机号码！',
         _this.isWarning=true;
         return
       }
       if (!reg.test(_this.formData.mobile)) {
-        // _this.$message.error({
-        //   message: '请输入正确的手机号码',
-        //   center: true
-        // })
         _this.warning= '请输入正确的手机号码！',
         _this.isWarning=true;
         return
@@ -132,6 +124,10 @@ export default {
       _this.postData(_this.urlCode, params, function (res) {
         console.log(res)
         if(res.code===0){
+          _this.$message({
+            message: '验证码已发送',
+            type: 'success'
+          })
           _this.isWarning=false;
           let i;
           i = 60;
@@ -145,6 +141,9 @@ export default {
               _this.codeMsg = '获取验证码'
             }
           }, 1000)
+        }else {
+          _this.getCode = true;
+          _this.codeMsg =res.msg
         }
       })
     },
@@ -152,36 +151,22 @@ export default {
       let _this = this
       let reg = /^((13|14|15|17|18)[0-9]{1}\d{8})$/
       if(!_this.formData.mobile){
-        // _this.$message.error({
-        //   message: '请输入手机号码',
-        //   center: true
-        // })
         _this.warning= '请输入手机号码！',
         _this.isWarning=true;
         return
       }
       if (!reg.test(_this.formData.mobile)){
-        // _this.$message.error({
-        //   message: '请输入正确的手机号码',
-        //   center: true
-        // })
         _this.warning= '请输入正确的手机号码！',
         _this.isWarning=true;
         return
       }
       if(!_this.formData.code){
-        _this.$message.error({
-          message: '请输入验证码！',
-          center: true
-        })
+        _this.warning= '请输入验证码！',
+        _this.isWarning=true;
         return
       }
       //判断验证码是否为数字
       if( /^\d+$/.test(_this.formData.code)===false){
-        // _this.$message.error({
-        //   message: '验证码不是数字，请重新输入',
-        //   center: true
-        // })
         _this.warning= '验证码必须是数字！',
         _this.isWarning=true;
         return
@@ -197,10 +182,6 @@ export default {
           _this.isWarning=false;
           _this.$emit('nav-fun', {first:'个人中心', second:'登录密码设置', third:'输入手机号', fourth:'输入密码'});
         } else {
-          // _this.$message.error({
-          //   message: res.msg,
-          //   center: true
-          // })
           _this.warning= res.msg;
           _this.isWarning=true;
         }
@@ -216,7 +197,7 @@ export default {
         //   message: '请输入密码',
         //   center: true
         // })
-        _this.warning= '请输入密码！',
+        _this.warning= '请输入密码！'
         _this.isWarning=true;
         return
       }
@@ -225,7 +206,7 @@ export default {
         //   message: '请输入长度为8到12位的密码',
         //   center: true
         // })
-        _this.warning= '请输入长度为8到12位的密码！',
+        _this.warning= '请输入长度为8到12位的密码！'
         _this.isWarning=true;
         return
       }
@@ -234,7 +215,7 @@ export default {
         //   message: '密码必须包含数字、字母、符号中两种！',
         //   center: true
         // })
-        _this.warning= '密码必须包含数字、字母、符号中两种！',
+        _this.warning= '密码必须包含数字、字母、符号中两种！'
         _this.isWarning=true;
         return
       }
@@ -276,8 +257,7 @@ export default {
         _this.isWarning=true;
         return
       }
-      // let password = encodeURI(_this.encryptByDES(_this.formData.password, 'DES_KEY_PASSWORD'))
-      let password = encodeURIComponent(encodeURIComponent(_this.encryptByDES(_this.password, 'DES_KEY_PASSWORD')));
+      let password = encodeURIComponent(encodeURIComponent(_this.encryptByDES(_this.formData.password, 'DES_KEY_PASSWORD')));
       let params = {
         token: sessionStorage.getItem('token'),
         mobile: _this.formData.mobile,
